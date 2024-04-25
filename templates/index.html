@@ -5,7 +5,13 @@
 {% block content %}
 
 <!--TODO Sección del Hero de la Home-->
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+<header class="mb-auto">
 
+<section class="lead">
+    <img src="{{ url_for('static', filename='img/hero.jpg') }}" alt="banco de cocina con utensilios" class="w-100">
+    <h2>¿Quién dijo que comer sano es aburrido?</h2>
+</section>
 <section class="container container-menu" id="recetas_seccion">
 <!--? Seccion del menu galería-->
     <div class="container-fluid">

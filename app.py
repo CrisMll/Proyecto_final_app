@@ -3,7 +3,7 @@ import os
 from config import config
 from dotenv import load_dotenv
 from supabase import create_client, Client
-from flask_login import LoginManager, login_user, logout_user, login_required
+from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf.csrf import CSRFProtect
 
 #Models
@@ -60,12 +60,9 @@ def get_recipe(id):
 
 @login_manager_app.user_loader
 def load_user(id_usuario):
-    supabase = app.config['SUPABASE']
     return ModelUser.get_by_id(supabase,id_usuario)
 
-'''@app.route('/register')
-def signup():
-    return render_template('signup.html')'''
+
 
 @app.route('/user_signup', methods=['GET', 'POST'])
 def user_signup():
@@ -74,7 +71,6 @@ def user_signup():
         username = request.form['username']
         passwrd = request.form['user_passwrd']
         hashed_passwrd = User.hash_password(passwrd)
-        supabase = app.config['SUPABASE']
         response = supabase.table('usuarios').insert({'name': fullname, 'email': username, 'passwrd': hashed_passwrd}).execute()
         
         if ModelUser.check_username_exists(supabase, username):
@@ -90,9 +86,8 @@ def user_signup():
 def login():
     if request.method=='POST':
         user = User(0, request.form['username'],request.form['user_passwrd'])
-        supabase = app.config['SUPABASE']
         logged_user = ModelUser.login(supabase, user)
-        if logged_user != None:
+        if logged_user is not None:
             if logged_user.passwrd:
                 login_user(logged_user)
                 return redirect(url_for('home'))
@@ -105,6 +100,7 @@ def login():
     
     return render_template('auth/login.html')
 
+
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     logout_user()
@@ -114,6 +110,35 @@ def logout():
 
 #? RUTA USUARIOS REGISTRADOS
 
+
+@app.route('/user_recipes/', methods=['GET', 'POST'])
+@login_required
+def recipes():
+    if request.method == 'POST' and 'txtRecipeName' in request.form and 'txtRecipe' in request.form:
+        _recipe_name = request.form['txtRecipeName']
+        _recipe = request.form['txtRecipe']
+        response = supabase.table('usuarios_recetas').insert({'id_usuario': current_user.id, 'nombre_receta': _recipe_name, 'texto_receta': _recipe}).execute()
+
+        if response.data:
+            flash ('Receta enviada con éxito')
+            return render_template('auth/user_recipes.html')
+        else: 
+            flash ('Receta enviada con éxito')
+            return render_template('auth/user_recipes.html')
+        
+    if current_user.is_authenticated:
+        return render_template('auth/user_recipes.html', mensaje='¡Bienvenido, {}! Puedes enviar tu receta aquí.'.format(current_user.name))
+    else:
+        return render_template('auth/user_recipes.html', mensaje='¡Solo los usuarios logueados pueden enviar recetas! Por favor, inicia sesión para continuar.')
+
+    #return render_template('auth/user_recipes.html')
+
+
+
+
+
+
+'''
 @app.route('/user_recipes/', methods=['GET', 'POST'])
 @login_required
 def recipes():
@@ -136,7 +161,7 @@ def status_401(error):
     return redirect(url_for('login'))
 
 def status_404(error):
-    return "<h1> Página no encontrada. </h1>", 404    
+    return "<h1> Página no encontrada. </h1>", 404 '''   
 
 
 
@@ -153,7 +178,7 @@ if __name__ == '__main__':
     app.config.from_object(config['development'])
     app.config['SUPABASE'] = config['development'].supabase'''
     csrf.init_app(app)
-    app.register_error_handler(401, status_401)
-    app.register_error_handler(404, status_404)
+    #app.register_error_handler(401, status_401)
+    #app.register_error_handler(404, status_404)
     app.run(debug=True)
 
