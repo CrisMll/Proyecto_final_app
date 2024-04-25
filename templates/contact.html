@@ -1,0 +1,25 @@
+{% extends './base.html' %}
+
+{% block title %}Crispy Kitchen - Inicio{% endblock %}
+
+{% block content %}
+
+        <div class="container mt-5">
+            <div class="card">
+                <img src="/static/img/logoCK.png" class="card-img-contact mx-auto d-block" alt="Imagen">
+                <div class="card-body">
+                    <h5 class="card-title">Contacto</h5>
+                    <a href="mailto:crispy.kitchen.app@gmail.com" class="bi bi-envelope mr-2"><i class="fas fa-envelope"></i> Gmail</a>
+                    <a href="https://www.instagram.com/crispy-kitchen-app" class="bi bi-instagram"><i class="fab fa-instagram"></i>
+                        Instagram</a>
+                    <hr>
+                    
+                    <div class="input-group mb-3 align-items-center">
+                        <span class="email-text"><a href="mailto:crispy.kitchen.app@gmail.com"
+                            id="emailLink">crispy.kitchen.app@gmail.com</a></span>
+                        <button id="copyEmail" class="bi bi-clipboard" type="button"  data-bs-toggle="tooltip" data-bs-placement="top" title="Click para copiar"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

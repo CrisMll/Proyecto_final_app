@@ -1,0 +1,27 @@
+{% extends './base.html' %}
+
+{% block title %}Envía tu receta{% endblock %}
+{% block customCSS %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"">
+{% endblock %}
+
+{% block content %}
+    <div class="container-form">
+        <form class="form-control" action="/user_recipes" method="post">
+            <h1>Envía tus recetas</h1>
+            {% if mensaje %}
+            {{mensaje}}
+            {% endif %}
+            <div class="mb-3">
+                <label for="exampleInputName" class="form-label">Nombre de la receta</label>
+                <input type="text" class="form-control" id="exampleInputName" name="txtRecipeName">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputReceta" class="form-label">Receta</label>
+                <textarea class="form-control" id="exampleInputReceta" name="txtRecipe"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+        
+    </div>
+{% endblock %}

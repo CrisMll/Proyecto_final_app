@@ -1,0 +1,16 @@
+{% extends './base.html' %}
+
+{% block title %}{{ seccion['nombre_seccion'] }}{% endblock %}
+
+{% block content %}
+    <h1>{{ seccion['nombre_seccion'] }}</h1>
+        {% for receta in recetas %}
+        <a href="{{ url_for('get_recipe', id=receta.id_receta) }}">
+            <img class="w-full h-auto" src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) + '.jpg'  }}" alt="{{ receta['nombre_receta'] }}">
+        </a>
+        <div class="p-4">
+            <h2 class="text-lg font-semibold">{{ receta['nombre_receta'] }}</h2>
+        </div>
+        {% endfor %}
+    <button onclick="goBack()">Volver</button>
+{% endblock %}
