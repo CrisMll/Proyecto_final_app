@@ -1,5 +1,5 @@
 from supabase import create_client, Client
-from .entities.User import User
+from .entities.user import User
 
 class ModelUser():
     

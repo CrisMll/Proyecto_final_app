@@ -11,43 +11,26 @@
 {% block content %}
 
 <main class="form-signin w-100 m-auto">
-    <form class="form-signin" action="/user_signup" method="POST">
-        <img class="mb-4" src="{{ url_for('static', filename='img/logo.png')}}" alt="" width="72" height="57">
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        </br>
-        {% for message in messages %}
-        <div class="alert alert-primary alert-dismissible" role="alert">
-            <strong>{{ message }}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    <h2 class="text-center">Registro</h2>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <form class="form-signin text-center" method="post" action="{{ url_for('register') }}">
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" name="name" required>
+            <label for="name">Nombre</label>
         </div>
-        {% endfor %}
-        {% endif %}
-
-        {% endwith %}
-        <h1 class="h3 mb-3 fw-normal">Registro</h1>
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <div class="form-floating">
-            <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Nombre">
-            <label for="fullname">Nombre completo</label>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="email" name="email" required>
+            <label for="email">Correo Electrónico</label>
         </div>
-        <div class="form-floating">
-            <input type="text" class="form-control" id="username" name="username" placeholder="Nombre de usuario">
-            <label for="username">Email</label>
+        <div class="form-floating mb-3">
+            <input type="passwrd" class="form-control" id="passwrd" name="passwrd" required>
+            <label for="passwrd">Contraseña</label>
         </div>
-        <div class="form-floating">
-            <input type="password" class="form-control" id="passwrd" name="user_passwrd" placeholder="Password">
-            <label for="user_passwrd">Password</label>
+        <div class="form-floating mb-3">
+            <input type="passwrd" class="form-control" id="confirm_passwrd" name="confirm_passwrd" required>
+            <label for="confirm_passwrd">Confirmar Contraseña</label>
         </div>
-
-        <div class="form-check text-start my-3">
-            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                Recuérdame
-            </label>
-        </div>
-        <button class="btn btn-primary w-100 py-2" type="submit">Acceder</button>
-        <p class="mt-5 mb-3 text-body-secondary"></p>
+        <button type="submit" class="btn btn-primary">Registrarse</button>
     </form>
 </main>
 {% endblock %}

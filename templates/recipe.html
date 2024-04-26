@@ -1,39 +1,94 @@
 {% extends './base.html' %}
 
 {% block title %}{{ receta['nombre_receta'] }}{% endblock %}
-
 {% block content %}
-        <h1>{{ receta['nombre_receta'] }}</h1>
-        <img src="{{ url_for('static', filename='img/img_recetas/' + receta['nombre_receta']) + '.jpg' }}" alt="{{ receta['nombre_receta'] }}">
-        <p>{{ receta['descripcion'] }}</p>
-        <h2>Preparación</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt tenetur quos est cum aut optio quae fuga nemo consequuntur totam. Molestiae necessitatibus ducimus accusantium eveniet aperiam, explicabo voluptatum veniam sit.
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit commodi illum incidunt sapiente! Excepturi voluptatum voluptates quaerat iusto enim molestias similique vel? Dolore debitis corporis soluta excepturi nam reprehenderit. Maiores.
-            Dolorum nesciunt excepturi aliquid nobis veniam deleniti ad rem unde eum voluptas voluptate dolorem placeat doloribus neque molestiae, consectetur corporis nihil repellat labore rerum perspiciatis voluptatem. Distinctio consequatur praesentium modi.
-            Corrupti inventore eveniet odio corporis commodi molestias quos culpa quae. Nobis harum, eaque sapiente veritatis suscipit omnis possimus labore ut enim. Voluptate quaerat ducimus tempora totam in aut voluptatem rerum?
-            Vero est quas nobis, recusandae esse at magnam assumenda, harum amet pariatur eum sequi magni excepturi odit omnis! Cupiditate adipisci odio voluptatem mollitia ratione deserunt nobis vitae praesentium natus dicta?
-            Ipsa, deserunt eaque nostrum illo ducimus debitis nobis! Magni rem laboriosam sed velit molestias facere dolorem reiciendis suscipit sequi aut dolores, eligendi quisquam aliquam. Quam ipsa provident assumenda velit asperiores.</p>
-        <p>{{ receta['ingredientes'] }}</p>
-        <h2>Ingredientes</h2>
-        <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-        </ul>
-        <p>{{ receta['preparacion'] }}</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum repudiandae nulla non porro. Deleniti voluptatum aperiam ducimus laudantium quam nostrum vero dolor ad molestias provident, mollitia iste pariatur excepturi harum.
-        Repellat enim qui minima dolores vitae quaerat, accusamus eos nulla at, adipisci asperiores libero unde animi eius est sapiente ea quae odio! Soluta molestiae deleniti nulla doloribus vero non deserunt.
-        Nemo perspiciatis omnis cupiditate dolorum fuga libero, dolore, at nostrum molestiae cumque laborum facilis eum! Illo, quas accusantium? Optio, laboriosam fuga. Temporibus iste nam assumenda beatae corrupti soluta amet? Ducimus!
-        Amet exercitationem rem excepturi maiores quisquam ut at esse porro asperiores accusamus! Aliquid laboriosam nihil harum sint cupiditate quis non nam blanditiis quos provident facilis est culpa, repudiandae, ab sequi!
-        Nostrum consectetur, quaerat dolorum consequuntur labore temporibus ipsum officiis ex autem vitae commodi veritatis sit velit ab cum, quos in. Accusamus eaque aliquid dolore illo. Facilis sed aliquid animi nemo.
-        Ducimus blanditiis reprehenderit, repellendus perspiciatis pariatur vero quam unde dicta assumenda. Amet sint sequi, quos neque distinctio quisquam cum dolorum ducimus reiciendis, ut quia, incidunt aspernatur tempora! Veritatis, tempore similique!
-        Reiciendis nisi magnam repellat perferendis blanditiis mollitia ad eaque ullam id modi ab quisquam dignissimos repudiandae consequatur totam ut veniam aliquid iusto ipsum voluptate est eum, sit libero! Magni, dolor.
-        Sunt delectus tempora commodi facilis laudantium exercitationem explicabo unde illum eveniet nobis magnam perspiciatis, accusamus excepturi, nihil aperiam alias in dicta veritatis tenetur, dolores vitae eligendi natus. Sint, optio dicta!
-        Rerum, velit cupiditate ratione perspiciatis laborum repellendus voluptates sit minus blanditiis quia necessitatibus officia. Nobis itaque mollitia quisquam tenetur obcaecati, accusamus eligendi nesciunt accusantium minus, nostrum dicta cumque rerum reiciendis?
-        Sunt, et dignissimos eos fugiat iure doloribus aliquam beatae. Itaque facilis quaerat ut, minima dolorum at commodi eaque soluta consectetur vel laborum voluptate, animi consequuntur officia alias! Praesentium, reiciendis eveniet!
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem numquam qui, aperiam illo sequi doloribus doloremque veniam animi maxime, enim aliquid quidem. Voluptas, esse itaque explicabo magnam pariatur natus ipsum?</p>
+<h1>{{ receta['nombre_receta'] }}</h1>
+{% if current_user.is_authenticated %}
+{% if receta.id_receta in current_user.favorite_recipes %}
+<form action="{{ url_for('remove_favorite', recipe_id=receta.id_receta) }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
+    <button type="submit" class="btn btn-danger">Eliminar de Favoritos</button>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</form>
+{% else %}
+<form action="{{ url_for('add_favorite', recipe_id=receta.id_receta) }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
+    <button type="submit" class="btn btn-primary">Agregar a Favoritos</button>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{ category }}">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+</form>
+{% endif %}
+{% endif %}
+<img src="{{ url_for('static', filename='img/img_recetas/' + receta['nombre_receta']) + '.jpg' }}"
+    alt="{{ receta['nombre_receta'] }}">
+<p>{{ receta['descripcion'] }}</p>
+<h2>Preparación</h2>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt tenetur quos est cum aut optio quae fuga nemo
+    consequuntur totam. Molestiae necessitatibus ducimus accusantium eveniet aperiam, explicabo voluptatum veniam sit.
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Velit commodi illum incidunt sapiente! Excepturi
+    voluptatum voluptates quaerat iusto enim molestias similique vel? Dolore debitis corporis soluta excepturi nam
+    reprehenderit. Maiores.
+    Dolorum nesciunt excepturi aliquid nobis veniam deleniti ad rem unde eum voluptas voluptate dolorem placeat
+    doloribus neque molestiae, consectetur corporis nihil repellat labore rerum perspiciatis voluptatem. Distinctio
+    consequatur praesentium modi.
+    Corrupti inventore eveniet odio corporis commodi molestias quos culpa quae. Nobis harum, eaque sapiente veritatis
+    suscipit omnis possimus labore ut enim. Voluptate quaerat ducimus tempora totam in aut voluptatem rerum?
+    Vero est quas nobis, recusandae esse at magnam assumenda, harum amet pariatur eum sequi magni excepturi odit omnis!
+    Cupiditate adipisci odio voluptatem mollitia ratione deserunt nobis vitae praesentium natus dicta?
+    Ipsa, deserunt eaque nostrum illo ducimus debitis nobis! Magni rem laboriosam sed velit molestias facere dolorem
+    reiciendis suscipit sequi aut dolores, eligendi quisquam aliquam. Quam ipsa provident assumenda velit asperiores.
+</p>
+<p>{{ receta['ingredientes'] }}</p>
+<h2>Ingredientes</h2>
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<p>{{ receta['preparacion'] }}</p>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum repudiandae nulla non porro. Deleniti voluptatum
+    aperiam ducimus laudantium quam nostrum vero dolor ad molestias provident, mollitia iste pariatur excepturi harum.
+    Repellat enim qui minima dolores vitae quaerat, accusamus eos nulla at, adipisci asperiores libero unde animi eius
+    est sapiente ea quae odio! Soluta molestiae deleniti nulla doloribus vero non deserunt.
+    Nemo perspiciatis omnis cupiditate dolorum fuga libero, dolore, at nostrum molestiae cumque laborum facilis eum!
+    Illo, quas accusantium? Optio, laboriosam fuga. Temporibus iste nam assumenda beatae corrupti soluta amet? Ducimus!
+    Amet exercitationem rem excepturi maiores quisquam ut at esse porro asperiores accusamus! Aliquid laboriosam nihil
+    harum sint cupiditate quis non nam blanditiis quos provident facilis est culpa, repudiandae, ab sequi!
+    Nostrum consectetur, quaerat dolorum consequuntur labore temporibus ipsum officiis ex autem vitae commodi veritatis
+    sit velit ab cum, quos in. Accusamus eaque aliquid dolore illo. Facilis sed aliquid animi nemo.
+    Ducimus blanditiis reprehenderit, repellendus perspiciatis pariatur vero quam unde dicta assumenda. Amet sint sequi,
+    quos neque distinctio quisquam cum dolorum ducimus reiciendis, ut quia, incidunt aspernatur tempora! Veritatis,
+    tempore similique!
+    Reiciendis nisi magnam repellat perferendis blanditiis mollitia ad eaque ullam id modi ab quisquam dignissimos
+    repudiandae consequatur totam ut veniam aliquid iusto ipsum voluptate est eum, sit libero! Magni, dolor.
+    Sunt delectus tempora commodi facilis laudantium exercitationem explicabo unde illum eveniet nobis magnam
+    perspiciatis, accusamus excepturi, nihil aperiam alias in dicta veritatis tenetur, dolores vitae eligendi natus.
+    Sint, optio dicta!
+    Rerum, velit cupiditate ratione perspiciatis laborum repellendus voluptates sit minus blanditiis quia necessitatibus
+    officia. Nobis itaque mollitia quisquam tenetur obcaecati, accusamus eligendi nesciunt accusantium minus, nostrum
+    dicta cumque rerum reiciendis?
+    Sunt, et dignissimos eos fugiat iure doloribus aliquam beatae. Itaque facilis quaerat ut, minima dolorum at commodi
+    eaque soluta consectetur vel laborum voluptate, animi consequuntur officia alias! Praesentium, reiciendis eveniet!
+    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem numquam qui, aperiam illo sequi doloribus
+    doloremque veniam animi maxime, enim aliquid quidem. Voluptas, esse itaque explicabo magnam pariatur natus ipsum?
+</p>
 
-        <button onclick="goBack()">Volver</button>
+<button onclick="goBack()">Volver</button>
 {% endblock %}

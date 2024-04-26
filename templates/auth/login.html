@@ -27,13 +27,16 @@
         {% endwith %}
         <h1 class="h3 mb-3 fw-normal">Inicio de Sesión</h1>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
-        <div class="form-floating">
-            <input type="text" class="form-control" id="username" name="username" placeholder="name@example.com">
-            <label for="username">Email</label>
+        {% if show_signup_link %}
+        <p>Si no estás registrado aún, <a href="{{ url_for('signup') }}">regístrate aquí</a>.</p>
+        {% endif %}
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="email" name="email" placeholder="name@example.com">
+            <label for="name">Email</label>
         </div>
-        <div class="form-floating">
-            <input type="password" class="form-control" id="user_passwrd" name="user_passwrd" placeholder="Password">
-            <label for="user_passwrd">Password</label>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="passwrd" name="passwrd" placeholder="Password">
+            <label for="passwrd">Password</label>
         </div>
     
         <div class="form-check text-start my-3">
