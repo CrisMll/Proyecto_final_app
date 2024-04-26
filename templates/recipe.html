@@ -1,42 +1,40 @@
 {% extends './base.html' %}
 
 {% block title %}{{ receta['nombre_receta'] }}{% endblock %}
+
 {% block content %}
+
 <h1>{{ receta['nombre_receta'] }}</h1>
+
 {% if current_user.is_authenticated %}
 {% if receta.id_receta in current_user.favorite_recipes %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }}">
+    {{ message }}
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
 <form action="{{ url_for('remove_favorite', recipe_id=receta.id_receta) }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
     <button type="submit" class="btn btn-danger">Eliminar de Favoritos</button>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">
-        {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
 </form>
 {% else %}
 <form action="{{ url_for('add_favorite', recipe_id=receta.id_receta) }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
     <button type="submit" class="btn btn-primary">Agregar a Favoritos</button>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }}">
-        {{ message }}
-    </div>
-    {% endfor %}
-    {% endif %}
-    {% endwith %}
 </form>
 {% endif %}
 {% endif %}
+
 <img src="{{ url_for('static', filename='img/img_recetas/' + receta['nombre_receta']) + '.jpg' }}"
     alt="{{ receta['nombre_receta'] }}">
+
 <p>{{ receta['descripcion'] }}</p>
+
 <h2>Preparación</h2>
 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt tenetur quos est cum aut optio quae fuga nemo
     consequuntur totam. Molestiae necessitatibus ducimus accusantium eveniet aperiam, explicabo voluptatum veniam sit.

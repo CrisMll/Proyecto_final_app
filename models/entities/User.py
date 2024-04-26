@@ -19,6 +19,19 @@ class User(UserMixin):
         self.role = role
         self.favorite_recipes = favorite_recipes if favorite_recipes else []
         
+    
+    @classmethod
+    def load_user(cls, id_usuario):
+        response = supabase.table('usuarios').select('*').eq('id', id_usuario).execute()
+        user_data = response.data
+        if user_data:
+            user_data = user_data[0]
+            user = User(id_usuario=user_data['id'], name=user_data['name'], email=user_data['email'], 
+                        passwrd=user_data['passwrd'], role=user_data['id_rol'], favorite_recipes=user_data['favorite_recipes'])
+            return user
+        return None
+        
+        
     def get_id(self):
         return str(self.id_usuario)
 
@@ -49,6 +62,8 @@ class User(UserMixin):
     def check_password(cls, hashed_password, passwrd):
         return check_password_hash(hashed_password, passwrd)
 
+
+    #? FUNCIONES DE RECETAS FAVORITAS
     
     def add_favorite_recipe(self, recipe_name):
         response = supabase.table('usuarios').select('favorite_recipes').eq('id', self.id_usuario).execute()
@@ -65,13 +80,3 @@ class User(UserMixin):
             self.favorite_recipes.remove(recipe_name)
             supabase.from_('usuarios').update({'favorite_recipes': self.favorite_recipes}).eq('id', self.id_usuario).execute()
         
-    @classmethod
-    def load_user(cls, id_usuario):
-        response = supabase.table('usuarios').select('*').eq('id', id_usuario).execute()
-        user_data = response.data
-        if user_data:
-            user_data = user_data[0]
-            user = User(id_usuario=user_data['id'], name=user_data['name'], email=user_data['email'], 
-                        passwrd=user_data['passwrd'], role=user_data['id_rol'], favorite_recipes=user_data['favorite_recipes'])
-            return user
-        return None
