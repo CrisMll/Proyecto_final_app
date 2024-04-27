@@ -81,7 +81,7 @@ def add_favorite(recipe_id):
     receta = response.data[0]
     nombre_receta = receta['nombre_receta']
     current_user.add_favorite_recipe(nombre_receta)
-    flash('Receta agregada a favoritos.', 'success')
+    flash('Receta añadida a favoritos.', 'success')
     return redirect(url_for('profile'))
 
 @app.route('/remove_favorite/<int:recipe_id>', methods=['POST'])
@@ -91,7 +91,7 @@ def remove_favorite(recipe_id):
     receta = response.data[0]
     nombre_receta = receta['nombre_receta']
     current_user.remove_favorite_recipe(nombre_receta)
-    flash('Receta agregada a favoritos.', 'success')
+    flash('Receta eliminada de favoritos.', 'success')
     return redirect(url_for('profile'))
 
 

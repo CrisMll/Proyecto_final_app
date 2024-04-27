@@ -82,7 +82,6 @@ class User(UserMixin):
     def get_favorite_recipes(self):
         return self.favorite_recipes    
         
-    @classmethod        
     def remove_favorite_recipe(self, recipe_name):
         if recipe_name in self.favorite_recipes:
             self.favorite_recipes.remove(recipe_name)

@@ -3,6 +3,7 @@
 {% block title %}Perfil de Usuario{% endblock %}
 
 {% block content %}
+<div id="popup" class="alert alert-success" style="display: none;"></div>
 
 <div class="container">
     <h2 class="text-center">Perfil de {{ current_user.name }}</h2>
@@ -15,4 +16,9 @@
         {% endfor %}
     </ul>
 </div>
+
+
+{% endblock %}
+{% block customJS %}
+<script src="{{ url_for('static', filename='js/popup.js') }}"></script>
 {% endblock %}
