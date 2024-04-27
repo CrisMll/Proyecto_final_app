@@ -35,7 +35,7 @@ def load_user(id_usuario):
     if user_data:
         user_data = user_data[0]
         user = User(id_usuario=user_data['id'], name=user_data['name'], email=user_data['email'], 
-                    passwrd=user_data['passwrd'], role=user_data['id_rol'])
+                    passwrd=user_data['passwrd'], role=user_data['id_rol'], favorite_recipes=user_data['favorite_recipes'])
         return user
     return None
 
@@ -141,8 +141,8 @@ def logout():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', favorite_recipes=current_user.favorite_recipes)
-
+    favorite_recipes = current_user.get_favorite_recipes()
+    return render_template('profile.html', favorite_recipes=favorite_recipes)
 
 
 #? CONTACTO

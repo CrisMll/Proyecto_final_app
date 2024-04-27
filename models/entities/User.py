@@ -26,11 +26,16 @@ class User(UserMixin):
         user_data = response.data
         if user_data:
             user_data = user_data[0]
-            user = User(id_usuario=user_data['id'], name=user_data['name'], email=user_data['email'], 
-                        passwrd=user_data['passwrd'], role=user_data['id_rol'], favorite_recipes=user_data['favorite_recipes'])
+            user = User(
+                id_usuario=user_data['id'],
+                name=user_data['name'],
+                email=user_data['email'], 
+                passwrd=user_data['passwrd'],
+                role=user_data['id_rol'],
+                favorite_recipes=user_data['favorite_recipes']
+            )
             return user
         return None
-        
         
     def get_id(self):
         return str(self.id_usuario)
@@ -73,6 +78,9 @@ class User(UserMixin):
         if recipe_name not in current_favorites:
             current_favorites.append(recipe_name)
         supabase.table('usuarios').update({'favorite_recipes': current_favorites}).eq('id', self.id_usuario).execute()
+        
+    def get_favorite_recipes(self):
+        return self.favorite_recipes    
         
     @classmethod        
     def remove_favorite_recipe(self, recipe_name):
