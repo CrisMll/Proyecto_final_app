@@ -69,9 +69,6 @@ def get_recipe(id):
     return render_template("recipe.html", receta=receta)
 
 
-
-
-
 #? RUTA DE RECETAS FAVORITAS
 
 @app.route('/add_favorite/<int:recipe_id>', methods=['POST'])
@@ -81,8 +78,9 @@ def add_favorite(recipe_id):
     receta = response.data[0]
     nombre_receta = receta['nombre_receta']
     current_user.add_favorite_recipe(nombre_receta)
+    current_user.favorite_recipes = current_user.get_favorite_recipes()
     flash('Receta añadida a favoritos.', 'success')
-    return redirect(url_for('profile'))
+    return redirect(url_for('profile', add_recipe = True))
 
 @app.route('/remove_favorite/<int:recipe_id>', methods=['POST'])
 @login_required
@@ -92,7 +90,7 @@ def remove_favorite(recipe_id):
     nombre_receta = receta['nombre_receta']
     current_user.remove_favorite_recipe(nombre_receta)
     flash('Receta eliminada de favoritos.', 'success')
-    return redirect(url_for('profile'))
+    return redirect(url_for('profile',remove_recipe = True))
 
 
 

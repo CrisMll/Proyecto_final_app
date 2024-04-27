@@ -83,7 +83,11 @@ class User(UserMixin):
         return self.favorite_recipes    
         
     def remove_favorite_recipe(self, recipe_name):
-        if recipe_name in self.favorite_recipes:
-            self.favorite_recipes.remove(recipe_name)
-            supabase.from_('usuarios').update({'favorite_recipes': self.favorite_recipes}).eq('id', self.id_usuario).execute()
+        response = supabase.table('usuarios').select('favorite_recipes').eq('id', self.id_usuario).execute()
+        current_favorites = response.data[0]['favorite_recipes']
+        if recipe_name in current_favorites:
+            current_favorites.remove(recipe_name)
+        supabase.table('usuarios').update({'favorite_recipes': current_favorites}).eq('id', self.id_usuario).execute()
+        
+
         

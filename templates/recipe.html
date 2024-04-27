@@ -7,16 +7,8 @@
 <h1>{{ receta['nombre_receta'] }}</h1>
 
 {% if current_user.is_authenticated %}
-{% if receta.id_receta in current_user.favorite_recipes %}
-{% with messages = get_flashed_messages(with_categories=true) %}
-{% if messages %}
-{% for category, message in messages %}
-<div class="alert alert-{{ category }}">
-    {{ message }}
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
+{% if receta.nombre_receta in current_user.favorite_recipes %}
+
 
 <form action="{{ url_for('remove_favorite', recipe_id=receta.id_receta) }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
