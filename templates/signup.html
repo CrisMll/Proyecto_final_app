@@ -12,8 +12,19 @@
 
 <main class="form-signin w-100 m-auto">
     <h2 class="text-center">Registro</h2>
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-    <form class="form-signin text-center" method="post" action="{{ url_for('register') }}">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% endwith %}
+    <form class="form-signin text-center" method="post" action="{{ url_for('signup') }}">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="name" name="name" required>
             <label for="name">Nombre</label>
@@ -23,11 +34,11 @@
             <label for="email">Correo Electrónico</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="passwrd" class="form-control" id="passwrd" name="passwrd" required>
+            <input type="password" class="form-control" id="passwrd" name="passwrd" required>
             <label for="passwrd">Contraseña</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="passwrd" class="form-control" id="confirm_passwrd" name="confirm_passwrd" required>
+            <input type="password" class="form-control" id="confirm_passwrd" name="confirm_passwrd" required>
             <label for="confirm_passwrd">Confirmar Contraseña</label>
         </div>
         <button type="submit" class="btn btn-primary">Registrarse</button>
