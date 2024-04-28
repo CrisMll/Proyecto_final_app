@@ -1,27 +1,37 @@
 {% extends "base.html" %}
+
 {% block content %}
+
 <h1>Añadir receta</h1>
+
 <form method="POST" enctype="multipart/form-data">
+
     <label for="nombre_receta">Nombre de la receta:</label><br>
     <input type="text" id="nombre_receta" name="nombre_receta" required><br>
+
     <label for="descripcion">Descripción:</label><br>
     <textarea id="descripcion" name="descripcion" required></textarea><br>
+
     <label for="tipo_seccion_id">Tipo de sección:</label><br>
     <select id="tipo_seccion_id" name="tipo_seccion_id">
         {% for seccion in secciones %}
         <option value="{{ seccion.id_seccion }}">{{ seccion.id_seccion }}</option>
         {% endfor %}
     </select><br>
+
     <label for="preparacion">Preparación:</label><br>
     <textarea id="preparacion" name="preparacion" required></textarea><br>
+
     <label for="ingredientes">Ingredientes:</label><br>
     <select id="ingredientes" name="ingredientes" multiple>
         {% for ingrediente in ingredientes %}
-        <option value="{{ ingrediente.id_ingrediente }}">{{ ingrediente.id_ingrediente }}</option>
+        <option value="{{ ingrediente.id_ingrediente }}">{{ ingrediente.nombre_ingrediente }}</option>
         {% endfor %}
     </select>
+    
     <label for="imagen_receta">Imagen de la receta:</label><br>
     <input type="file" id="imagen_receta" name="imagen_receta"><br>
     <input type="submit" value="Añadir receta">
 </form>
+
 {% endblock %}
