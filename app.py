@@ -10,6 +10,7 @@ import uuid
 
 #Models
 from models.modelUser import ModelUser
+from forms import RegistrationForm
 
 #Entities
 from models.entities.user import User
@@ -121,6 +122,34 @@ def login():
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        name = form.name.data
+        email = form.email.data
+        passwrd = form.passwrd.data
+        confirm_passwrd = form.confirm_passwrd.data
+
+        if passwrd != confirm_passwrd:
+            flash('Las contraseñas no coinciden.', 'error')
+        else:
+            response = supabase.table('usuarios').select('*').eq('email', email).execute()
+            user_exists = response.data
+            if user_exists:
+                flash('El usuario ya existe.', 'error')
+            else:
+                hashed_password = generate_password_hash(passwrd)
+                response = supabase.from_('usuarios').insert({'name': name, 'email': email, 'passwrd': hashed_password}).execute()
+                flash('Registrado con éxito. Por favor, inicia sesión.', 'success')
+                return redirect(url_for('login'))
+
+    return render_template('signup.html', form=form)
+
+
+
+
+
+'''@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     if request.method == 'POST':
         name = request.form['name']
         email = request.form['email']
@@ -141,7 +170,7 @@ def signup():
                 flash('Registrado con éxito. Por favor, inicia sesión.', 'success')
                 return redirect(url_for('login'))
             
-    return render_template('signup.html')
+    return render_template('signup.html')'''
 
 @app.route('/logout')
 @login_required
@@ -190,13 +219,6 @@ def admin():
     response = supabase.table('ingredientes').select('id_ingrediente').execute()
     ingredientes = response.data
     return render_template('admin.html', secciones=secciones, ingredientes=ingredientes)
-
-
-
-
-
-
-
 
 
 

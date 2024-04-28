@@ -4,25 +4,67 @@
 
 {% block customCSS %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}"">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
 {% endblock %}
 
 {% block content %}
 
-<main class="form-signin w-100 m-auto">
-    <h2 class="text-center">Registro</h2>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <div class="alert alert-danger">
-            <ul>
-                {% for message in messages %}
-                <li>{{ message }}</li>
+<main class=" form-signin w-100 m-auto">
+<h2 class="text-center">Registro</h2>
+
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-danger">
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endwith %}
+
+
+
+<form class="form-signin text-center" method="post" action="{{ url_for('signup') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
+    {{ form.hidden_tag() }}
+    <div class="form-floating mb-3">
+        {{ form.name(class="form-control") }}
+        <label for="name">Nombre</label>
+    </div>
+    <div class="form-floating mb-3 email-register-validation" >
+        {{ form.email(class="form-control") }}
+        <label for="email">Correo Electrónico</label>
+        {% if form.email.errors %}
+            <div class="alert alert-danger">
+                {% for error in form.email.errors %}
+                    <p>{{ error }}</p>
                 {% endfor %}
-            </ul>
-        </div>
+            </div>
         {% endif %}
-        {% endwith %}
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.passwrd(class="form-control") }}
+        <label for="passwrd">Contraseña</label>
+        {% if form.passwrd.errors %}
+            <div class="alert alert-danger">
+                {% for error in form.passwrd.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <div class="form-floating mb-3">
+        {{ form.confirm_passwrd(class="form-control") }}
+        <label for="confirm_passwrd">Confirmar Contraseña</label>
+    </div>
+    {{ form.submit(class="btn btn-primary") }}
+</form>
+
+    <!--    
     <form class="form-signin text-center" method="post" action="{{ url_for('signup') }}">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
         <div class="form-floating mb-3">
@@ -42,6 +84,6 @@
             <label for="confirm_passwrd">Confirmar Contraseña</label>
         </div>
         <button type="submit" class="btn btn-primary">Registrarse</button>
-    </form>
+    </form>-->
 </main>
 {% endblock %}
