@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_wtf.csrf import CSRFProtect
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -79,8 +79,8 @@ def add_favorite(recipe_id):
     nombre_receta = receta['nombre_receta']
     current_user.add_favorite_recipe(nombre_receta)
     current_user.favorite_recipes = current_user.get_favorite_recipes()
-    flash('Receta añadida a favoritos.', 'success')
-    return redirect(url_for('profile', add_recipe = True))
+    flash('Receta añadida', 'added')
+    return redirect(url_for('profile', message='added'))
 
 @app.route('/remove_favorite/<int:recipe_id>', methods=['POST'])
 @login_required
@@ -89,8 +89,8 @@ def remove_favorite(recipe_id):
     receta = response.data[0]
     nombre_receta = receta['nombre_receta']
     current_user.remove_favorite_recipe(nombre_receta)
-    flash('Receta eliminada de favoritos.', 'success')
-    return redirect(url_for('profile',remove_recipe = True))
+    flash('Receta eliminada', 'removed')
+    return redirect(url_for('profile', message='removed'))
 
 
 

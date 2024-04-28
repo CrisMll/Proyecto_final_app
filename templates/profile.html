@@ -4,6 +4,16 @@
 
 {% block content %}
 
+{% with categories = get_flashed_messages(with_categories=true) %}
+    {% if categories %}
+        {% for category, message in categories %}
+            <div class="alert alert-{% if category == 'added' %}success{% elif category == 'removed' %}danger{% endif %}">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
 <div class="container">
     <h2 class="text-center">Perfil de {{ current_user.name }}</h2>
@@ -18,7 +28,4 @@
 </div>
 
 
-{% endblock %}
-{% block customJS %}
-<script src="{{ url_for('static', filename='js/popup.js') }}"></script>
 {% endblock %}
