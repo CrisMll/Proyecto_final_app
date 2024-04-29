@@ -1,0 +1,15 @@
+/* Formulario de Admin */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-group{
+    max-width: 600px;
+}
+
+.btn-primary{
+    margin-top: 20px;
+}
