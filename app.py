@@ -166,7 +166,6 @@ def admin():
     
 # Admin backend para manejar los datos enviados al agregar receta
 @app.route('/admin/new', methods=['POST'])
-
 def admin_recipe():    
     if current_user.role == 1:
         if request.method == 'POST':
@@ -203,6 +202,7 @@ def admin_recipe():
             return redirect(url_for('error_405'))
     
     return render_template('admin/admin_recipe.html')
+
 
 #Vista del perfil de admin
 @app.route('/admin/profile')
