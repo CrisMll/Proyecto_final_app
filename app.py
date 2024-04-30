@@ -169,26 +169,43 @@ def admin_recipe():
             preparacion = request.form['preparacion']
             ingredientes = request.form.getlist('ingredientes')
             imagen_receta = request.files['imagen_receta']
-            
-            if imagen_receta and allowed_file(imagen_receta.filename):
-                filename = secure_filename(imagen_receta.filename)
-                imagen_receta.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-                response = supabase.table('recetas').insert({
+            filename = secure_filename(imagen_receta.filename)
+            imagen_receta.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                
+            try:
+            # Insertar en la tabla de recetas
+                response_receta = supabase.table('recetas_prueba').insert({
                     'nombre_receta': nombre_receta,
                     'imagen_receta': filename,
                     'descripcion': descripcion,
                     'tipo_seccion_id': tipo_seccion_id,
                     'preparacion': preparacion,
-                    'ingredientes': ingredientes
+                    'imagen_receta':filename
                 }).execute()
-                if response.get('error'):
-                    flash('Error al añadir la receta.', 'error')
-                else:
-                    flash('Receta añadida', 'success')
-                    return redirect(url_for('admin/admin_recipe.html'))
+                    
+                # Imprimir la respuesta de la inserción para ver su estructura
+                print(response_receta)
+                    
+                # Ajustar el código para acceder al ID de la receta recién insertada
+                    
+                flash('Receta añadida', 'success')
+                return redirect(url_for('home'))
+                
+            except Exception as e:
+                print(f"Error: {e}")
+                flash('Error al añadir la receta. Vuelve a intentarlo', 'error')
+                return redirect(url_for('error_405'))
+        else:
+            print(f"Error: {e}")
+            flash('Error al cargar la imagen de la receta.', 'error')
+            return redirect(url_for('error_405'))
     else:
         return redirect(url_for('home'))
+
+@app.route('/error_405')
+def error_405():
+    return render_template('error_405.html')
+
 
 
 #? RUTA DE RECETAS FAVORITAS

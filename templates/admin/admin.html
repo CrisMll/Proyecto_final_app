@@ -10,7 +10,7 @@
     <h1 class="text-center">Añadir receta</h1>
 
     <form action="/admin/new" method="POST" enctype="multipart/form-data">
-
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <section class="form-group">
             <label for="nombre_receta">Nombre de la receta:</label>
             <input type="text" class="form-control form-control-sm" id="nombre_receta" name="nombre_receta" required>
