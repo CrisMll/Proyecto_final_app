@@ -182,7 +182,7 @@ def admin_recipe():
             #? Control de errores para insertar receta en la tabla
                 response_receta = supabase.table('recetas_prueba').insert({
                     'nombre_receta': nombre_receta,
-                    'imagen_receta': filename,
+                    'imagen_receta': filename, #? de momento solo el nombre
                     'descripcion': descripcion,
                     'tipo_seccion_id': tipo_seccion_id,
                     'preparacion': preparacion,
@@ -202,6 +202,66 @@ def admin_recipe():
             return redirect(url_for('error_405'))
     
     return render_template('admin/admin_recipe.html')
+
+
+'''
+@app.route('/admin/new', methods=['POST'])
+def admin_recipe():    
+    if current_user.role == 1:
+        if request.method == 'POST':
+            nombre_receta = request.form['nombre_receta']
+            descripcion = request.form['descripcion']
+            tipo_seccion_id = request.form['tipo_seccion_id']
+            preparacion = request.form['preparacion']
+            ingredientes = request.form.getlist('ingredientes')
+            imagen_receta = request.files['imagen_receta']
+            filename = secure_filename(imagen_receta.filename)
+            imagen_receta.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            
+            #comprobar que estan bien los datos a insertar (respuesta ok)
+            print({
+                'nombre_receta': nombre_receta,
+                'descripcion': descripcion,
+                'tipo_seccion_id': tipo_seccion_id,
+                'preparacion': preparacion,
+                'ingredientes': ingredientes,
+                'imagen_receta': filename
+            })
+                
+            try:
+                # Insertar receta en la tabla
+                response_receta = supabase.table('recetas_prueba').insert({
+                    'nombre_receta': nombre_receta,
+                    'imagen_receta': filename,
+                    'descripcion': descripcion,
+                    'tipo_seccion_id': tipo_seccion_id,
+                    'preparacion': preparacion,
+                    'imagen_receta':filename
+                }).execute()
+                
+                # Obtener el id de la receta recién creada (posiblemente haya que hacer un select antes ¿¿??)
+                id_receta = response_receta.data['id_receta]
+                print(id_receta)
+                #! Este paso ya da error porque no imprime nada
+                
+                # Insertar ingredientes en la tabla ingredientes_recetas
+                for ingrediente in ingredientes:
+                    response_ingrediente = supabase.table('ingredientes_recetas').insert({
+                        'id_tipo_ingrediente': ingrediente,
+                        'id_tipo_receta': id_receta
+                    }).execute()
+                    
+                flash('Receta añadida', 'success')
+                return render_template('admin/admin_recipe.html')
+            except Exception as e:
+                flash('Error al añadir la receta. Vuelve a intentarlo.', 'error')
+                return redirect(url_for('error_405'))
+        else:
+            flash('Error al cargar la imagen de la receta.', 'error')
+            return redirect(url_for('error_405'))
+    
+    return render_template('admin/admin_recipe.html')
+'''
 
 
 #Vista del perfil de admin
