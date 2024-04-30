@@ -1,0 +1,26 @@
+{% extends './base.html' %}
+
+{% block title %}Crispy Kitchen - Inicio{% endblock %}
+
+{% block content %}
+<section class="container container-menu" id="recetas_seccion">
+    <!--? Seccion del menu galería-->
+    <div class="container-fluid">
+        <div class="row no-gutters">
+            {% for seccion in secciones %}
+            <article id="recetas_seccion" class="{% if loop.index is odd %}col-8{% else %}col-4{% endif %} p-0">
+                <figure class="card m-0">
+                    <a href="{{ url_for('get_section', id=seccion.id_seccion) }}" class="image-link">
+                        <img class="card-img-top"
+                            src="{{ url_for('static', filename='img/img_secciones/' + seccion['imagen_seccion']) + '.jpg' }}">
+                        <figcaption class="card-body image-caption">
+                            <h3 class="card-title">{{ seccion['nombre_seccion'] }}</h3>
+                        </figcaption>
+                    </a>
+                </figure>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

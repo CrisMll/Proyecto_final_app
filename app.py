@@ -65,7 +65,15 @@ def get_recipe(id):
     receta = response.data[0]
     return render_template("recipe.html", receta=receta)
 
-
+@app.route("/menu")
+def menu():
+    response = supabase.table("secciones").select("nombre_seccion, imagen_seccion, id_seccion").execute()
+    secciones = response.data
+    for seccion in secciones:
+        print(seccion['id_seccion'])  
+    response = supabase.table("recetas").select("nombre_receta").execute()
+    recetas = response.data
+    return render_template("menu.html", secciones=secciones, recetas=recetas )
 
 #? CONTROL DE USUARIOS
 
@@ -95,7 +103,7 @@ def login():
         else:
             flash('Datos incorrectos. Por favor, inténtalo de nuevo.', 'error')
             show_signup_link = True  
-    return render_template('login.html', show_signup_link=show_signup_link)
+    return render_template('login/login.html', show_signup_link=show_signup_link)
 
 #signup
 @app.route('/signup', methods=['GET', 'POST'])
@@ -109,20 +117,20 @@ def signup():
 
         if passwrd != confirm_passwrd:
             flash('Las contraseñas no coinciden.', 'error')
-            return redirect(url_for('signup'))
+            return redirect(url_for('/login/signup'))
         else:
             response = supabase.table('usuarios').select('*').eq('email', email).execute()
             user_exists = response.data
             if user_exists:
                 flash('El usuario ya existe.', 'error')
-                return redirect(url_for('signup'))
+                return redirect(url_for('login/signup'))
             else:
                 hashed_password = generate_password_hash(passwrd)
                 response = supabase.from_('usuarios').insert({'name': name, 'email': email, 'passwrd': hashed_password}).execute()
                 flash('Registrado con éxito. Por favor, inicia sesión.', 'success')
-                return redirect(url_for('login'))
+                return redirect(url_for('login/login'))
 
-    return render_template('signup.html', form=form)
+    return render_template('login/signup.html', form=form)
 
 #logout
 @app.route('/logout')
@@ -136,7 +144,7 @@ def logout():
 @login_required
 def profile():
     favorite_recipes = current_user.get_favorite_recipes()
-    return render_template('profile.html', favorite_recipes=favorite_recipes)
+    return render_template('login/profile.html', favorite_recipes=favorite_recipes)
 
 #? ROL ADMIN
 @app.route('/admin', methods=['GET', 'POST'])
@@ -147,7 +155,7 @@ def admin():
         secciones = response.data
         response = supabase.table('ingredientes').select('id_ingrediente', 'nombre_ingrediente').execute()
         ingredientes = response.data
-        return render_template('admin.html', secciones=secciones, ingredientes=ingredientes)
+        return render_template('admin/admin.html', secciones=secciones, ingredientes=ingredientes)
     else:
         return redirect(url_for('home'))
 
@@ -178,6 +186,7 @@ def admin_recipe():
                     flash('Error al añadir la receta.', 'error')
                 else:
                     flash('Receta añadida', 'success')
+                    return redirect(url_for('admin/admin_recipe.html'))
     else:
         return redirect(url_for('home'))
 
@@ -194,7 +203,7 @@ def add_favorite(recipe_id):
     current_user.add_favorite_recipe(nombre_receta)
     current_user.favorite_recipes = current_user.get_favorite_recipes()
     flash('Receta añadida', 'added')
-    return redirect(url_for('profile', message='added'))
+    return redirect(url_for('login/profile', message='added'))
 
 #remove favorita
 @app.route('/remove_favorite/<int:recipe_id>', methods=['POST'])
@@ -205,7 +214,7 @@ def remove_favorite(recipe_id):
     nombre_receta = receta['nombre_receta']
     current_user.remove_favorite_recipe(nombre_receta)
     flash('Receta eliminada', 'removed')
-    return redirect(url_for('profile', message='removed'))
+    return redirect(url_for('login/profile', message='removed'))
 
 
 

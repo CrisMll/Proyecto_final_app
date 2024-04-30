@@ -90,7 +90,7 @@
             <div>
                 <a href="/"><h3 class="float-md-start mb-0">Home</h3></a>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
-                    <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="#recetas_seccion">Recetas</a>
+                    <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/menu">Recetas</a>
                     <a class="nav-link fw-bold py-1 px-0" href="/contact">Contacta</a>
                     {% if current_user.is_authenticated %}
                     <span class="navbar-text">{{ current_user.name }}</span>
@@ -100,8 +100,8 @@
                     <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('admin') }}">Admin</a>
                     {% endif %}
                     {% else %}
-                    <a class="nav-link fw-bold py-1 px-0" href="/login">Inicio Sesión</a>
-                    <a class="nav-link fw-bold py-1 px-0" href="/signup">Registro</a>
+                    <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('login') }}">Inicio Sesión</a>
+                    <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('signup') }}">Registro</a>
                     {% endif %}
                 </nav>
             </div>
