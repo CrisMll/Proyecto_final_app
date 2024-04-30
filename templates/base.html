@@ -88,21 +88,49 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div>
-                <a href="/"><h3 class="float-md-start mb-0">Home</h3></a>
-                <nav class="nav nav-masthead justify-content-center float-md-end">
-                    <a class="nav-link fw-bold py-1 px-0 active" aria-current="page" href="/menu">Recetas</a>
-                    <a class="nav-link fw-bold py-1 px-0" href="/contact">Contacta</a>
-                    {% if current_user.is_authenticated %}
-                    <span class="navbar-text">{{ current_user.name }}</span>
-                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-                    <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('profile') }}">Perfil</a>
-                    {% if current_user.role == 1 %}
-                    <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('admin') }}">Admin</a>
-                    {% endif %}
-                    {% else %}
-                    <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('login') }}">Inicio Sesión</a>
-                    <a class="nav-link fw-bold py-1 px-0" href="{{ url_for('signup') }}">Registro</a>
-                    {% endif %}
+                <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+                    <div class="container">
+                        <a class="navbar-brand navbar-text" href="/">Home</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav ms-auto">
+                                
+                                {% if current_user.is_authenticated %}
+                                    <li class="nav-item">
+                                        <span class="navbar-text">{{ current_user.name }}</span>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                                    </li>
+                                    {% if current_user.role == 1 %}
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ url_for('admin') }}">Añadir Recetas</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ url_for('admin_profile') }}">Perfil</a>
+                                        </li>
+                                    {% elif current_user.role == 2 %}
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="{{ url_for('profile') }}">Perfil</a>
+                                        </li>
+                                    {% endif %}
+                                {% else %}
+                                    
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url_for('login') }}">Inicio Sesión</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ url_for('signup') }}">Registro</a>
+                                    </li>
+                                {% endif %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('menu') }}">Recetas</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </nav>
             </div>
         </header>

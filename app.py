@@ -30,7 +30,7 @@ url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_KEY")
 supabase = create_client(url, key)
 app.secret_key = os.getenv('SECRET_KEY')
-app.config['UPLOAD_FOLDER'] = 'static/img/img_recetas'
+app.config['UPLOAD_FOLDER'] = 'static/img/img_recetas/'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
 
 def allowed_file(filename):
@@ -113,22 +113,24 @@ def signup():
         name = form.name.data
         email = form.email.data
         passwrd = form.passwrd.data
+        print(passwrd)
         confirm_passwrd = form.confirm_passwrd.data
+        print(confirm_passwrd)
 
-        if passwrd != confirm_passwrd:
-            flash('Las contraseñas no coinciden.', 'error')
-            return redirect(url_for('/login/signup'))
-        else:
+        if passwrd == confirm_passwrd:
             response = supabase.table('usuarios').select('*').eq('email', email).execute()
             user_exists = response.data
             if user_exists:
-                flash('El usuario ya existe.', 'error')
-                return redirect(url_for('login/signup'))
+                flash('El usuario ya existe.', 'danger')
+                return redirect(url_for('signup'))
             else:
                 hashed_password = generate_password_hash(passwrd)
                 response = supabase.from_('usuarios').insert({'name': name, 'email': email, 'passwrd': hashed_password}).execute()
                 flash('Registrado con éxito. Por favor, inicia sesión.', 'success')
-                return redirect(url_for('login/login'))
+                return redirect(url_for('login'))
+        else:
+            flash('Las contraseñas no coinciden.', 'danger')
+            return redirect(url_for('signup'))
 
     return render_template('login/signup.html', form=form)
 
@@ -139,7 +141,7 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
-#mostrar user profile
+#mostrar perfil del usuario
 @app.route('/profile')
 @login_required
 def profile():
@@ -147,8 +149,11 @@ def profile():
     return render_template('login/profile.html', favorite_recipes=favorite_recipes)
 
 #? ROL ADMIN
+
+# Vista cliente de admin en añadir receta. Recogida de info para mostrar secciones
 @app.route('/admin', methods=['GET', 'POST'])
 @login_required
+
 def admin():
     if current_user.role == 1:
         response = supabase.table('secciones').select('id_seccion').execute()
@@ -158,8 +163,10 @@ def admin():
         return render_template('admin/admin.html', secciones=secciones, ingredientes=ingredientes)
     else:
         return redirect(url_for('home'))
-
+    
+# Admin backend para manejar los datos enviados al agregar receta
 @app.route('/admin/new', methods=['POST'])
+
 def admin_recipe():    
     if current_user.role == 1:
         if request.method == 'POST':
@@ -173,7 +180,7 @@ def admin_recipe():
             imagen_receta.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 
             try:
-            # Insertar en la tabla de recetas
+            #? Control de errores para insertar receta en la tabla
                 response_receta = supabase.table('recetas_prueba').insert({
                     'nombre_receta': nombre_receta,
                     'imagen_receta': filename,
@@ -183,28 +190,26 @@ def admin_recipe():
                     'imagen_receta':filename
                 }).execute()
                     
-                # Imprimir la respuesta de la inserción para ver su estructura
-                print(response_receta)
-                    
-                # Ajustar el código para acceder al ID de la receta recién insertada
-                    
                 flash('Receta añadida', 'success')
-                return redirect(url_for('home'))
-                
+                return render_template('admin/admin_recipe.html')
+            #? Si falla el insert    
             except Exception as e:
-                print(f"Error: {e}")
-                flash('Error al añadir la receta. Vuelve a intentarlo', 'error')
+                #print(f"Error: {e}")
+                flash('Error al añadir la receta. Vuelve a intentarlo.', 'error')
                 return redirect(url_for('error_405'))
         else:
-            print(f"Error: {e}")
+            #print(f"Error: {e}")
             flash('Error al cargar la imagen de la receta.', 'error')
             return redirect(url_for('error_405'))
-    else:
-        return redirect(url_for('home'))
+    
+    return render_template('admin/admin_recipe.html')
 
-@app.route('/error_405')
-def error_405():
-    return render_template('error_405.html')
+#Vista del perfil de admin
+@app.route('/admin/profile')
+def admin_profile():
+    response = supabase.table("recetas").select("id_receta, nombre_receta, imagen_receta, ingredientes, preparacion").execute()
+    recetas = response.data
+    return render_template("admin/admin_profile.html", recetas=recetas)
 
 
 
@@ -220,7 +225,7 @@ def add_favorite(recipe_id):
     current_user.add_favorite_recipe(nombre_receta)
     current_user.favorite_recipes = current_user.get_favorite_recipes()
     flash('Receta añadida', 'added')
-    return redirect(url_for('login/profile', message='added'))
+    return redirect(url_for('profile', message='added'))
 
 #remove favorita
 @app.route('/remove_favorite/<int:recipe_id>', methods=['POST'])
@@ -231,7 +236,7 @@ def remove_favorite(recipe_id):
     nombre_receta = receta['nombre_receta']
     current_user.remove_favorite_recipe(nombre_receta)
     flash('Receta eliminada', 'removed')
-    return redirect(url_for('login/profile', message='removed'))
+    return redirect(url_for('profile', message='removed'))
 
 
 
@@ -240,6 +245,11 @@ def remove_favorite(recipe_id):
 @app.route('/contact', methods=['GET', 'POST'])
 def contact_page():
     return render_template('contact.html')
+
+#? MANEJO DE VISTAS DE ERRORES
+@app.route('/error_405')
+def error_405():
+    return render_template('error_405.html')
 
 
 if __name__ == '__main__':

@@ -6,7 +6,7 @@ import re
 class PasswordCheck:
     def __init__(self, message=None):
         if not message:
-            message = 'La contraseña debe contener al menos un número y una letra mayúscula.'
+            message = 'Introduce al menos un número y una letra mayúscula.'
         self.message = message
 
     def __call__(self, form, field):
@@ -18,5 +18,15 @@ class RegistrationForm(FlaskForm):
     name = StringField('Nombre', validators=[DataRequired()])
     email = StringField('Correo Electrónico', validators=[DataRequired(), Email()])
     passwrd = PasswordField('Contraseña', validators=[DataRequired(), Length(min=6), PasswordCheck()])
-    confirm_passwrd = PasswordField('Confirmar Contraseña', validators=[DataRequired(), EqualTo('passwrd')])
+    confirm_passwrd = PasswordField('Confirmar Contraseña', validators=[DataRequired()])
     submit = SubmitField('Registrarse')
+    
+    def validate(self, **kwargs):
+
+        initial_validation = super(RegistrationForm, self).validate(**kwargs)
+
+        if self.passwrd.data != self.confirm_passwrd.data:
+            self.confirm_passwrd.errors.append('Las contraseñas no coinciden')
+            return False
+
+        return initial_validation

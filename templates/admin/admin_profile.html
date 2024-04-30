@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Perfil de Administrador{% endblock %}
+
+{% block content %}
+
+{% with categories = get_flashed_messages(with_categories=true) %}
+    {% if categories %}
+        {% for category, message in categories %}
+            <div class="alert alert-{% if category == 'added' %}success{% elif category == 'removed' %}danger{% endif %}">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="container">
+    <h1 class="text-center">Perfil de {{ current_user.name }}</h1>
+    <p><strong>Nombre:</strong> {{ current_user.name }}</p>
+    <p><strong>Correo Electrónico:</strong> {{ current_user.email }}</p>
+    <h2>Recetas de la web</h2>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+        {% for receta in recetas %}
+            <div class="col">
+                <div class="card mb-4">
+                    <img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}" class="card-img-top" alt="{{ receta['nombre_receta'] }}">
+                    <div class="card-body">
+                        <p class="card-title">{{ receta['nombre_receta'] }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
