@@ -186,20 +186,38 @@ def admin_recipe():
                     'descripcion': descripcion,
                     'tipo_seccion_id': tipo_seccion_id,
                     'preparacion': preparacion,
-                    'imagen_receta':filename
                 }).execute()
+                
+                response = supabase.table('recetas_prueba').select('id_receta').eq('nombre_receta', nombre_receta).execute()    
+                id_receta = response.data[0]
+                
+                try:
+                    for ingrediente in ingredientes:
+                        ingrediente = int(ingrediente)
+                        print(type(ingrediente))
+                        print(ingrediente)
+                        response = supabase.table('ingredientes_recetas_prueba').insert({
+                            'id_tipo_receta': id_receta['id_receta'],
+                            'id_tipo_ingrediente':ingrediente
+                        }).execute()
+                        response = supabase.table('ingredientes_recetas_prueba').select('*').execute()    
+                        receta = response.data
+                        print(receta)
+                        
+                    
+                except Exception as e:
+                    print(f"Error: {e}")
+                    flash('Error al añadir ingredientes.', 'error')
+                    return redirect(url_for('error_405'))
                     
                 flash('Receta añadida', 'success')
                 return render_template('admin/admin_recipe.html')
+            
             #? Si falla el insert    
             except Exception as e:
-                #print(f"Error: {e}")
+                print(f"Error: {e}")
                 flash('Error al añadir la receta. Vuelve a intentarlo.', 'error')
                 return redirect(url_for('error_405'))
-        else:
-            #print(f"Error: {e}")
-            flash('Error al cargar la imagen de la receta.', 'error')
-            return redirect(url_for('error_405'))
     
     return render_template('admin/admin_recipe.html')
 
