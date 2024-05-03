@@ -1,23 +1,20 @@
 {% extends './base.html' %}
 
-{% block title %}ínicio Sesión{% endblock %}
+{% block title %}Inicio Sesión{% endblock %}
 
 {% block customCSS %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='static/css/forms.css') }}">
 
 {% endblock %}
 
 {% block content %}
 
-<main class="form-signin w-100 m-auto">
-    <form class="form-signin text-center" action="/login" method="POST">
-        <img class="mb-4" src="{{ url_for('static', filename='img/logo.png')}}" alt="" width="72" height="57">
-        {% with messages = get_flashed_messages() %}
+{% with messages = get_flashed_messages() %}
         {% if messages %}
-        </br>
+        
         {% for message in messages %}
-        <div class="alert alert-primary alert-dismissible" role="alert">
+        <div class="alert alert-success alert-dismissible" role="alert">
             <strong>{{ message }}</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
         </div>
@@ -25,28 +22,35 @@
         {% endif %}
 
         {% endwith %}
-        <h1 class="h3 mb-3 fw-normal">Inicio de Sesión</h1>
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"> 
-        {% if show_signup_link %}
-        <p>Si no estás registrado aún, <a href="{{ url_for('signup') }}">regístrate aquí</a>.</p>
-        {% endif %}
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="email" name="email" placeholder="name@example.com">
-            <label for="name">Email</label>
+
+    <div class="container col-xl-10 col-xxl-8 p-5 mx-auto my-5">
+        <div class="row align-items-center justify-content-center g-lg-5 p-3 py-5 border shadow-lg">
+            <div class="col-lg-7 text-center text-lg-start">
+                <h1 class="display-4 fw-bold lh-1 mb-3">Inicia Sesión</h1>
+                <p class="col-lg-10 fs-4">Inicia sesión en tu cuenta para entrar a tu perfil.</p>
+            </div>
+            <div class="col-md-10 mx-auto col-lg-5 p-3">
+                <form class="p-4 p-md-5 border rounded-3 bg-light" action="/login" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    {% if show_signup_link %}
+                    <p>Si no estás registrado aún, <a href="{{ url_for('signup') }}">regístrate aquí</a>.</p>
+                    {% endif %}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="email" name="email" placeholder="name@example.com">
+                        <label for="name">Email</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="passwrd" name="passwrd" placeholder="Password">
+                        <label for="passwrd">Password</label>
+                    </div>
+                    <div class="form-floating">
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Aceptar</button>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="passwrd" name="passwrd" placeholder="Password">
-            <label for="passwrd">Password</label>
-        </div>
-    
-        <div class="form-check text-start my-3">
-            <input class="form-check-input" type="checkbox" value="remember-me" id="flexCheckDefault">
-            <label class="form-check-label" for="flexCheckDefault">
-                Recuérdame
-            </label>
-        </div>
-        <button class="btn btn-primary w-100 py-2" type="submit">Accede</button>
-        <p class="mt-5 mb-3 text-body-secondary"></p>
-    </form>
+    </div>
+
+
 </main>
 {% endblock %}

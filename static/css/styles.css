@@ -7,6 +7,8 @@
     --color-light-secondary: rgba(254, 245, 240, 1);
     --color-light-terciary: rgba(94, 72, 60, .4);
     --color-light-highlight: rgba(152, 76, 34, .4);
+    --color-light-highlight-menu: rgba(152, 76, 34, .2);
+
     /* Dark mode */
     --color-dark-primary: rgba(34, 34, 34, 1);
     --color-dark-secondary: rgba(45, 45, 45, 1);
@@ -58,6 +60,13 @@
 }
 
 /*Nav-bar*/
+.navbar {
+    background: var(--color-light-highlight);
+    font-family: var(--header-font);
+    padding: 30px;
+    font-size: var(--subheader-font-size);
+}
+
 .nav-scroller {
     position: relative;
     z-index: 2;
@@ -76,7 +85,8 @@
     -webkit-overflow-scrolling: touch;
 }
 
-/* Galerry menus*/
+/* Galery menus*/
+
 .image-link {
     position: relative;
     display: block;
@@ -89,13 +99,15 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(84, 48, 92, 0.5);
+    background: rgba(77, 44, 42, 0.4);
 }
 
 .card-img-top {
     width: 100%;
     height: 200px;
     object-fit: cover;
+    transition: transform 0.3s ease;
+    ;
 }
 
 .card-img-contact {
@@ -112,7 +124,25 @@
     background: rgba(7, 7, 7, 0.5);
     color: white;
     z-index: 1;
+
 }
+
+.card-menu {
+    overflow: hidden;
+}
+
+.card-menu:hover {
+    background-color: var(--color-light-highlight);
+}
+
+.card-menu:hover .card-img-top {
+    transform: scale(1.2);
+}
+
+.card-menu:hover .image-link::after {
+    background: rgba(122, 50, 32, 0.5);
+}
+
 
 /* Headers */
 
@@ -124,6 +154,7 @@
     font-family: var(--header-font);
     font-size: var(--header-font-size);
     font-weight: var(--header-font-weight);
+    color: var(--color-dark-primary);
 }
 
 .header-hero p {

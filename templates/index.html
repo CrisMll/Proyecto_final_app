@@ -26,7 +26,7 @@
                 {% for seccion in secciones %}
                 <div
                     class="col-lg-{{ column_sizes[loop.index0 % 6] }} col-md-{{ column_sizes[loop.index0 % 6] }} col-sm-{{ column_sizes[loop.index0 % 6] }} p-0">
-                    <article id="recetas_seccion" class="card m-0">
+                    <article id="recetas_seccion" class="card card-menu m-0">
                         <a href="{{ url_for('get_section', id=seccion.id_seccion) }}" class="image-link">
                                 <img class="card-img-top" src="{{ url_for('static', filename='img/img_secciones/' + seccion['imagen_seccion']) + '.jpg' }}">
                                 <figcaption class="card-body image-caption">

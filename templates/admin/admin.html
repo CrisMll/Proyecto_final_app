@@ -2,7 +2,7 @@
 {% block title %}Admin{% endblock %}
 {% block customCSS %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
-<link rel="stylesheet" href="../static/css/forms.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='static/css/forms.css') }}">
 {% endblock %}
 
 {% block content %}
