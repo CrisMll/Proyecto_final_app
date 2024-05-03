@@ -6,10 +6,83 @@ body {
     height: 100vh;
 }
 
-.form-group{
+.form-group {
     max-width: 600px;
 }
 
-.btn-primary{
+.btn-primary {
     margin-top: 20px;
+}
+
+.bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+}
+
+/*Sign*/
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+.form-signin .form-floating:focus-within {
+    z-index: 2;
+}
+
+.form-signin input[type="text"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* Contact */
+.image-link {
+    position: relative;
+    display: block;
+}
+
+.image-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(84, 48, 92, 0.5);
+}
+
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-img-contact {
+    width: 100px;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-caption {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(7, 7, 7, 0.5);
+    color: white;
+    z-index: 1;
+}
+
+.bi-clipboard {
+    background: none;
+    border: none;
 }
