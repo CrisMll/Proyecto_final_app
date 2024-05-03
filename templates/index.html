@@ -3,35 +3,44 @@
 {% block title %}Crispy Kitchen - Inicio{% endblock %}
 
 {% block content %}
+<section class="cover-container d-flex w-100 h-100 mx-auto flex-column">
 
-<!--TODO Sección del Hero de la Home-->
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
-<header class="mb-auto">
+    <header class="hero mb-auto position-relative">
+        <section class="lead">
+            <h1 class="header-hero position-absolute top-50 start-50 translate-middle">
+                <p>COOK,</p>
+                <p>EAT,</p>
+                <p>REPEAT!</p>
+            </h1>
+            <img src="{{ url_for('static', filename='img/hero.jpg') }}" alt="banco de cocina con utensilios" class="w-100">
+            
+        </section>
+    </header>
+    
+    
+    <section class="cover-container container-menu" id="recetas_seccion">
+        <h2 class="subheader">¿Quién dijo que comer sano es aburrido?</h2>
+        <div class="container-fluid">
+            <div class="row no-gutters">
+                {% set column_sizes = ['7', '5', '5', '7', '6', '6'] %}
+                {% for seccion in secciones %}
+                <div
+                    class="col-lg-{{ column_sizes[loop.index0 % 6] }} col-md-{{ column_sizes[loop.index0 % 6] }} col-sm-{{ column_sizes[loop.index0 % 6] }} p-0">
+                    <article id="recetas_seccion" class="card m-0">
+                        <a href="{{ url_for('get_section', id=seccion.id_seccion) }}" class="image-link">
+                                <img class="card-img-top" src="{{ url_for('static', filename='img/img_secciones/' + seccion['imagen_seccion']) + '.jpg' }}">
+                                <figcaption class="card-body image-caption">
+                                    <h3 class="card-title">{{ seccion['nombre_seccion'] }}</h3>
+                                </figcaption>
+                        </a>
+                    </article>
+                </div>
+                {% endfor %}
 
-<section class="lead">
-    <img src="{{ url_for('static', filename='img/hero.jpg') }}" alt="banco de cocina con utensilios" class="w-100">
-    <div class="divider"></div>
-    <h2>¿Quién dijo que comer sano es aburrido?</h2>
-</section>
-<section class="container container-menu" id="recetas_seccion">
-<!--? Seccion del menu galería-->
-    <div class="container-fluid">
-        <div class="row no-gutters">
-            {% for seccion in secciones %}
-            <article id="recetas_seccion" class="{% if loop.index is odd %}col-8{% else %}col-4{% endif %} p-0">
-                <figure class="card m-0">
-                    <a href="{{ url_for('get_section', id=seccion.id_seccion) }}" class="image-link">
-                        <img class="card-img-top" src="{{ url_for('static', filename='img/img_secciones/' + seccion['imagen_seccion']) + '.jpg' }}">
-                        <figcaption class="card-body image-caption">
-                            <h3 class="card-title">{{ seccion['nombre_seccion'] }}</h3>
-                        </figcaption>
-                    </a>
-                </figure>
-            </article>
-            {% endfor %}
+            </div>
         </div>
-    </div>
+    </section>
+
 </section>
+
 {% endblock %}
-
-
