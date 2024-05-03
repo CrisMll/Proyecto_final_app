@@ -150,13 +150,13 @@ def profile():
 
 #? ROL ADMIN
 
-# Vista cliente de admin en añadir receta. Recogida de info para mostrar secciones
+# Vista cliente de admin en añadir receta. Recogida de info para mostrar secciones en desplegables.
 @app.route('/admin', methods=['GET', 'POST'])
 @login_required
 
 def admin():
     if current_user.role == 1:
-        response = supabase.table('secciones').select('id_seccion').execute()
+        response = supabase.table('secciones').select('id_seccion', 'nombre_seccion').execute()
         secciones = response.data
         response = supabase.table('ingredientes').select('id_ingrediente', 'nombre_ingrediente').execute()
         ingredientes = response.data
@@ -180,7 +180,7 @@ def admin_recipe():
                 
             try:
             #? Control de errores para insertar receta en la tabla
-                response_receta = supabase.table('recetas_prueba').insert({
+                response_receta = supabase.table('recetas').insert({
                     'nombre_receta': nombre_receta,
                     'imagen_receta': filename, #? de momento solo el nombre
                     'descripcion': descripcion,
@@ -188,22 +188,18 @@ def admin_recipe():
                     'preparacion': preparacion,
                 }).execute()
                 
-                response = supabase.table('recetas_prueba').select('id_receta').eq('nombre_receta', nombre_receta).execute()    
+                # Paso para obtener el id de la receta recién creada para pasarlo en el siguiente insert
+                response = supabase.table('recetas').select('id_receta').eq('nombre_receta', nombre_receta).execute()    
                 id_receta = response.data[0]
                 
+                #? Control de errores para hacer el insert de ingredientes e id
                 try:
                     for ingrediente in ingredientes:
                         ingrediente = int(ingrediente)
-                        print(type(ingrediente))
-                        print(ingrediente)
-                        response = supabase.table('ingredientes_recetas_prueba').insert({
+                        response = supabase.table('ingredientes_recetas').insert({
                             'id_tipo_receta': id_receta['id_receta'],
                             'id_tipo_ingrediente':ingrediente
-                        }).execute()
-                        response = supabase.table('ingredientes_recetas_prueba').select('*').execute()    
-                        receta = response.data
-                        print(receta)
-                        
+                        }).execute()                        
                     
                 except Exception as e:
                     print(f"Error: {e}")
@@ -220,67 +216,6 @@ def admin_recipe():
                 return redirect(url_for('error_405'))
     
     return render_template('admin/admin_recipe.html')
-
-
-'''
-@app.route('/admin/new', methods=['POST'])
-def admin_recipe():    
-    if current_user.role == 1:
-        if request.method == 'POST':
-            nombre_receta = request.form['nombre_receta']
-            descripcion = request.form['descripcion']
-            tipo_seccion_id = request.form['tipo_seccion_id']
-            preparacion = request.form['preparacion']
-            ingredientes = request.form.getlist('ingredientes')
-            imagen_receta = request.files['imagen_receta']
-            filename = secure_filename(imagen_receta.filename)
-            imagen_receta.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            
-            #comprobar que estan bien los datos a insertar (respuesta ok)
-            print({
-                'nombre_receta': nombre_receta,
-                'descripcion': descripcion,
-                'tipo_seccion_id': tipo_seccion_id,
-                'preparacion': preparacion,
-                'ingredientes': ingredientes,
-                'imagen_receta': filename
-            })
-                
-            try:
-                # Insertar receta en la tabla
-                response_receta = supabase.table('recetas_prueba').insert({
-                    'nombre_receta': nombre_receta,
-                    'imagen_receta': filename,
-                    'descripcion': descripcion,
-                    'tipo_seccion_id': tipo_seccion_id,
-                    'preparacion': preparacion,
-                    'imagen_receta':filename
-                }).execute()
-                
-                # Obtener el id de la receta recién creada (posiblemente haya que hacer un select antes ¿¿??)
-                id_receta = response_receta.data['id_receta]
-                print(id_receta)
-                #! Este paso ya da error porque no imprime nada
-                
-                # Insertar ingredientes en la tabla ingredientes_recetas
-                for ingrediente in ingredientes:
-                    response_ingrediente = supabase.table('ingredientes_recetas').insert({
-                        'id_tipo_ingrediente': ingrediente,
-                        'id_tipo_receta': id_receta
-                    }).execute()
-                    
-                flash('Receta añadida', 'success')
-                return render_template('admin/admin_recipe.html')
-            except Exception as e:
-                flash('Error al añadir la receta. Vuelve a intentarlo.', 'error')
-                return redirect(url_for('error_405'))
-        else:
-            flash('Error al cargar la imagen de la receta.', 'error')
-            return redirect(url_for('error_405'))
-    
-    return render_template('admin/admin_recipe.html')
-'''
-
 
 #Vista del perfil de admin
 @app.route('/admin/profile')

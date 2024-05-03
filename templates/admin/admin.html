@@ -25,8 +25,9 @@
         <section class="form-group">
             <label for="tipo_seccion_id">Tipo de sección:</label>
             <select class="form-control form-control-sm" id="tipo_seccion_id" name="tipo_seccion_id">
+                <option value="">Elige una sección</option>
                 {% for seccion in secciones %}
-                <option value="{{ seccion.id_seccion }}">{{ seccion.id_seccion }}</option>
+                    <option value="{{ seccion.id_seccion }}">{{ seccion.nombre_seccion }}</option>
                 {% endfor %}
             </select>
         </section>
