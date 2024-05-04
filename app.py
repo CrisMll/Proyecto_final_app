@@ -52,25 +52,27 @@ def home():
 
 @app.route("/sections/<id>")
 def get_section(id):
+    response = supabase.table("secciones").select("id_seccion, nombre_seccion").execute()
+    secciones = response.data
     response = supabase.table("secciones").select("id_seccion, nombre_seccion, imagen_seccion").eq("id_seccion", id).execute()
     seccion = response.data[0]
     response = supabase.table("recetas").select("id_receta, nombre_receta, imagen_receta").eq("tipo_seccion_id", id).execute()
     recetas = response.data
-    return render_template("sections.html", seccion=seccion, recetas=recetas)
+    return render_template("sections.html", seccion=seccion, recetas=recetas,secciones=secciones)
 
 
 @app.route("/recipe/<id>")
 def get_recipe(id):
+    response = supabase.table("secciones").select("id_seccion, nombre_seccion").execute()
+    secciones = response.data
     response = supabase.table("recetas").select("id_receta, nombre_receta, imagen_receta, ingredientes, preparacion").eq("id_receta", id).execute()
     receta = response.data[0]
-    return render_template("recipe.html", receta=receta)
+    return render_template("recipe.html", receta=receta, secciones=secciones)
 
 @app.route("/menu")
 def menu():
     response = supabase.table("secciones").select("nombre_seccion, imagen_seccion, id_seccion").execute()
     secciones = response.data
-    for seccion in secciones:
-        print(seccion['id_seccion'])  
     response = supabase.table("recetas").select("nombre_receta").execute()
     recetas = response.data
     return render_template("menu.html", secciones=secciones, recetas=recetas )
