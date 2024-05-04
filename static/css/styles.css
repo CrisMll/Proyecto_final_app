@@ -63,26 +63,16 @@
 .navbar {
     background: var(--color-light-highlight);
     font-family: var(--header-font);
-    padding: 30px;
     font-size: var(--subheader-font-size);
 }
 
-.nav-scroller {
-    position: relative;
-    z-index: 2;
-    height: 2.75rem;
-    overflow-y: hidden;
+a {
+    text-decoration: none;
+    color: var(--color-dark-primary);
 }
 
-.nav-scroller .nav {
-    display: flex;
-    flex-wrap: nowrap;
-    padding-bottom: 1rem;
-    margin-top: -1px;
-    overflow-x: auto;
-    text-align: center;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
+ul {
+    list-style-type: none;
 }
 
 /* Galery menus*/
