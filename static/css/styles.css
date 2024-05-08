@@ -3,11 +3,12 @@
 :root {
     /* COLORS */
     /*Light mode*/
-    --color-ligth-primary: rgba(245, 245, 245, 1);
+    --color-light-primary: rgba(250, 245, 239, 0.5);
     --color-light-secondary: rgba(254, 245, 240, 1);
     --color-light-terciary: rgba(94, 72, 60, .4);
     --color-light-highlight: rgba(152, 76, 34, .4);
     --color-light-highlight-menu: rgba(152, 76, 34, .2);
+    --color-header:rgba(79, 40, 11, 1);
 
     /* Dark mode */
     --color-dark-primary: rgba(34, 34, 34, 1);
@@ -17,57 +18,91 @@
 
     /* FONTS */
 
-    --header-font: 'Mount', sans-serif;
+    --header-font: 'Montserrat', 'Open Sans', 'Helvetica Neue', sans-serif;
     --header-font-size: 60px;
     --header-font-weight: bold;
 
-    --subheader-font: 'Poppins Regular', sans-serif;
-    --subheader-font-size: 20px;
+    --subtitle-font: 'Englebert', 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    --subheader-font: Inter, 'Open Sans', 'Helvetica Neue', sans-serif;
+    --subheader-font-size: 18px;
     --subheader-font-weight: bold;
 
+    --button-font: 'Lato', sans-serif;
 
-    --text-font: Roboto, Ubuntu, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    --text-font: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     --text-font-size: 16px;
 
     --subtext-font-size: 14px;
 
 }
 
-/*Dark-Light controller*/
-.btn-bd-primary {
-    --bd-violet-bg: #712cf9;
-    --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+/* Generales */
 
-    --bs-btn-font-weight: 600;
-    --bs-btn-color: var(--bs-white);
-    --bs-btn-bg: var(--bd-violet-bg);
-    --bs-btn-border-color: var(--bd-violet-bg);
-    --bs-btn-hover-color: var(--bs-white);
-    --bs-btn-hover-bg: #6528e0;
-    --bs-btn-hover-border-color: #6528e0;
-    --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-    --bs-btn-active-color: var(--bs-btn-hover-color);
-    --bs-btn-active-bg: #5a23c8;
-    --bs-btn-active-border-color: #5a23c8;
+body{
+    min-width: 400px;
+}
+.btn{
+    padding: 2px 4px;
+    border: none;
 }
 
-.bd-mode-toggle {
-    z-index: 1500;
-}
-
-.bd-mode-toggle .dropdown-menu .active .bi {
-    display: block !important;
+.btn a {
+    font-size: 15px;
 }
 
 /*Nav-bar*/
+
+
 .navbar {
-    background: var(--color-light-highlight);
     font-family: var(--header-font);
-    font-size: var(--subheader-font-size);
+    padding: 8px 2px 0 2px;
+    background-color: var(--color-light-primary);
+    position: fixed;
+    top: 0; 
+    width: 100%; 
+    z-index: 10000;
+}
+
+.navbar2 {
+    margin-top: 32px; 
+    z-index: 1000;
+    padding: 0;
+}
+
+.nav-link:hover {
+    color: var(--color-header);
+}
+
+.navbar-toggler:focus{
+    box-shadow: none;
+}
+
+.navbar-profile {
+    z-index: 2001;
+}
+
+.navbar2 {
+    position: sticky;
+    top: 32px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.show ~ .navbar2 {
+    transform: translateY(150px);
+}
+
+@media (max-width: 900px) {
+    .navbar-collapse {
+        position: relative;
+    }
 }
 
 a {
     text-decoration: none;
+    font-family: var(--subheader-font);
+    font-size: var(--subheader-font-size);
     color: var(--color-dark-primary);
 }
 
@@ -75,7 +110,35 @@ ul {
     list-style-type: none;
 }
 
+.btn-outline-light:hover{
+    background-color: var(--color-light-highlight);
+}
+
+
+
+
+
+
 /* Galery menus*/
+
+.container-menu{
+    background: url('../img/rsz_natural-wooden-background.jpg');
+    padding-top: 6rem;
+}
+
+.text-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.h2-seccion-division{
+    margin: 80px 0 20px 0;
+    font-family: var(--subtitle-font);
+    color: var(--color-header);
+}
 
 .image-link {
     position: relative;
@@ -94,10 +157,11 @@ ul {
 
 .card-img-top {
     width: 100%;
-    height: 200px;
+    height: 300px;
     object-fit: cover;
     transition: transform 0.3s ease;
-    ;
+    border-radius: 0;
+    
 }
 
 .card-img-contact {
@@ -108,17 +172,21 @@ ul {
 
 .image-caption {
     position: absolute;
-    right: 0;
     top: 50%;
     transform: translateY(-50%);
     background: rgba(7, 7, 7, 0.5);
     color: white;
     z-index: 1;
-
 }
 
 .card-menu {
     overflow: hidden;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+    border: none;
 }
 
 .card-menu:hover {
@@ -133,25 +201,51 @@ ul {
     background: rgba(122, 50, 32, 0.5);
 }
 
+.card-menu:hover a{
+    filter: blur(1px);
+}
 
 /* Headers */
 
-.subheader {
-    font-family: var(--subheader-font);
+.cover-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    color: white;
+    text-align: left;
+    text-shadow: .25em .25em .5em rgba(122, 115, 115, 0.8);
+    position: relative;
+    margin-top: 120px;
 }
 
-.header-hero {
+.cover-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.cover-container h1 {
     font-family: var(--header-font);
-    font-size: var(--header-font-size);
-    font-weight: var(--header-font-weight);
-    color: var(--color-dark-primary);
+    font-weight: 800;
+    font-size: 8vw;
+    color: var(--color-header);
+    position: relative;
+    width: 100%;
+    z-index: 2;
+    margin: 0;
+    margin-left: 0;
+    padding: 0;
 }
 
-.header-hero p {
-    display: block;
-    line-height: normal;
-}
-
-.container-menu h2 {
-    padding: 50px;
+.cover-container h3 {
+    font-family: var(--subtitle-font);
+    color: var(--color-header);
+    margin: 0;
+    z-index: 2;
+    margin: 10px 0 0 0;
+    padding: 0;
+    font-size: 2vw;
 }

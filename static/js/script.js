@@ -9,7 +9,7 @@ function goBack() {
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
-let isClicked = false; 
+let isClicked = false;
 
 function copyEmail() {
     let url = document.getElementById('emailLink');
@@ -23,11 +23,11 @@ function copyEmail() {
     tooltip = new bootstrap.Tooltip(button); // 
     tooltip.show();
 
-    isClicked = true; 
+    isClicked = true;
 }
 document.getElementById('copyEmail').addEventListener('click', copyEmail);
 
-document.getElementById('copyEmail').addEventListener('mouseout', function() {
+document.getElementById('copyEmail').addEventListener('mouseout', function () {
     if (isClicked) {
         let button = document.getElementById('copyEmail');
         let tooltip = bootstrap.Tooltip.getInstance(button);
@@ -35,6 +35,6 @@ document.getElementById('copyEmail').addEventListener('mouseout', function() {
         button.setAttribute('data-bs-original-title', 'Click para copiar');
         tooltip = new bootstrap.Tooltip(button);
 
-        isClicked = false; 
+        isClicked = false;
     }
 });
