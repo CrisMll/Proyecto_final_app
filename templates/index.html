@@ -7,7 +7,7 @@
 <section class="cover-container d-flex w-100 h-auto mx-auto flex-column position-relative">
     <img src="{{ url_for('static', filename='img/hero.jpg') }}" class="w-100" alt="banco de cocina con utensilios">
     <div class="text-container">
-        <h1 class="hero-title">COOK,</br>EAT,</br>REPEAT!</h1>
+        <h1 class="hero-title lh-sm">COOK,</br>EAT,</br>REPEAT!</h1>
         <h3 class="hero-subtitle">¿Quién dijo que comer sano es aburrido?</h3>
     </div>
 </section>
@@ -35,6 +35,40 @@
             {% endfor %}
         </div>
     </div>
+</section>
+
+<section>
+    <h2 class="h2-seccion-division text-center">&#8668; ESCRÍBENOS &Rarrtl; </h2>
+</section>
+
+<section class="container-contact" id="contact">  
+    <section class="d-flex flex-column min-vh-100 bg-black bg-opacity-50 pt-10 pt-md-8 pb-7 pb-md-0">
+        <div class="container my-auto">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6 text-center transparent-card shadow-lg">
+                    <div class="text-xs text-shadow fw-bold text-opacity-75">
+                        <h1 class="text-shadow mb-4">Contacto</h1>
+                    </div>
+                    <p class="text-center text-shadow fw-semibold text-opacity-85 mb-7">
+                        Escríbenos un email con tus sugerencias o visita nuestro perfil de Instagram
+                    </p>
+                    <div class="text-shadow fw-medium mb-7 mb-md-0">
+                        <a class="text-shadow p-1" href="mailto:crispy.kitchen.app@gmail.com"><i class="bi bi-envelope mr-2"></i>
+                            Gmail
+                        </a>
+                        <a class="text-shadow fw-medium p-1" href="https://www.instagram.com/crispy-kitchen-app"> <i class="bi bi-instagram"></i>
+                            Instagram
+                        </a>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-center input-group mb-7 mb-md-0">
+                        <span class="email-text"><a class="text-shadow fw-medium p-2" href="mailto:crispy.kitchen.app@gmail.com" id="emailLink">crispy.kitchen.app@gmail.com</a></span>
+                        <button id="copyEmail" class="bi bi-clipboard" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Click para copiar"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </section>
 
 {% endblock %}

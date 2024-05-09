@@ -116,7 +116,7 @@ ul {
 
 .container-menu {
     background: url('../img/rsz_natural-wooden-background.jpg');
-    padding-top: 6rem;
+    padding: 6rem 0 6rem 0;
 }
 
 .text-container {
@@ -198,6 +198,27 @@ ul {
     filter: blur(1px);
 }
 
+.card-img-top-recetas {
+    position: relative;
+}
+
+.card-title-recetas{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.col{ 
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+
 /* Headers */
 
 .cover-container {
@@ -208,7 +229,7 @@ ul {
     text-align: left;
     text-shadow: .25em .25em .5em rgba(122, 115, 115, 0.8);
     position: relative;
-    margin-top: 120px;
+    
 }
 
 .cover-container::before {
@@ -266,14 +287,40 @@ ul {
 /* Contact */
 
 .container-contact {
-    clip-path: polygon(0px 0px, 100% 0px, 100% 100%, 0px 100%);
-    background: url('../img/natural-wooden-background.jpg');
-    position: fixed;
+    position: relative;
     top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    z-index: 0;
+    overflow: hidden;
+    background: url('../img/cocina2.jpg');
+    background-size: cover;
+    background-position: center;
+
 }
 
+.container-contact::before {
+    content: "";
+    position: relative;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5); 
+}
+
+.transparent-card{
+    background: rgba(170, 170, 170, 0.2);
+    border-radius: 15px;
+    padding: 20px;
+    font-family: var(--header-font);
+    color: var(--color-light-secondary);
+}
+
+.container-contact a, .container-contact p, .container-contact h1{
+    color: var(--color-light-secondary);
+    text-shadow:.25em .25em .5em rgba(2, 1, 1, 0.8);
+}
+
+.container-contact a{ 
+    font-family: var(--subheader-font);
+}

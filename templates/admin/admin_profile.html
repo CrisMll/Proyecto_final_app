@@ -28,11 +28,15 @@
         {% for receta in recetas %}
             <div class="col">
                 <div class="card mb-4">
-                    <img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}" class="card-img-top" alt="{{ receta['nombre_receta'] }}">
-                    <div class="card-body">
-                        <p class="card-title">{{ receta['nombre_receta'] }}</p>
-                    </div>
+                    <a href="{{ url_for('get_recipe', id=receta.id_receta) }}">
+                        <img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}" class="card-img-top" alt="{{ receta['nombre_receta'] }}">
+                        
+                        <div class="card-body">
+                            <p class="card-title">{{ receta['nombre_receta'] }}</p>
+                        </div>
+                    </a>    
                 </div>
+                    
             </div>
         {% endfor %}
     </div>
