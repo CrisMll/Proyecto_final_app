@@ -2,68 +2,89 @@
 {% block title %}Admin{% endblock %}
 {% block customCSS %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/css/multi-select-tag.css">
-<link rel="stylesheet" href="{{ url_for('static', filename='filename='/src/static/css/forms.css') }}">
 {% endblock %}
 
 {% block content %}
 
 <section class="container form-group">
-    <h1 class="text-center">Añadir receta</h1>
 
-    <form action="/admin/new" method="POST" enctype="multipart/form-data">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-        <section class="form-group">
-            <label for="nombre_receta">Nombre de la receta:</label>
-            <input type="text" class="form-control form-control-sm" id="nombre_receta" name="nombre_receta" required>
-        </section>
+    <div class="container col-xl-10 col-xxl-8 p-3 mx-auto my-3">
 
-        <section class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <textarea class="form-control form-control-sm" id="descripcion" name="descripcion" required></textarea>
-        </section>
+        <div class="row align-items-center justify-content-center mt-2 g-lg-5 p-3 border shadow-lg">
+            <h1 class="text-center">Añadir nueva receta</h1>
 
-        <section class="form-group">
-            <label for="tipo_seccion_id">Tipo de sección:</label>
-            <select class="form-control form-control-sm" id="tipo_seccion_id" name="tipo_seccion_id">
-                <option value="">Elige una sección</option>
-                {% for seccion in secciones %}
-                    <option value="{{ seccion.id_seccion }}">{{ seccion.nombre_seccion }}</option>
-                {% endfor %}
-            </select>
-        </section>
+            <div class="col-md-10 col-lg-7 p-1">
 
-        <section class="form-group">
-            <label for="preparacion">Preparación:</label>
-            <textarea class="form-control form-control-sm" id="preparacion" name="preparacion" required></textarea>
-        </section>
+                <form class="p-4 p-md-5 border rounded-3 bg-light" action="/admin/new" method="POST"
+                    enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
 
-        <section class="form-group">
-            <label for="ingredientes">Ingredientes:</label>
-                    <select class="form-control form-control-sm" name="ingredientes" id="ingredientes" multiple>
-                        {% for ingrediente in ingredientes %}
-                        <option value="{{ ingrediente.id_ingrediente }}">{{ ingrediente.nombre_ingrediente }}</option>
-                        {{ingrediente.nombre_ingrediente }}
-                        <br>
-                    {% endfor %}
-                    </select>
-        </section>
+                    <label class="form-label text-start" l for="nombre_receta">Nombre de la receta</label>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control form-control-sm" id="nombre_receta" name="nombre_receta"
+                            required>
+                    </div>
 
-        <section class="form-group">
-            <label class="d-block" for="imagen_receta">Imagen de la receta:</label>
-            <input type="file" class="custom-file-input" id="imagen_receta" name="imagen_receta">
-        </section>
-        
-        <button type="submit" class="btn btn-primary">Añadir receta</button>
+                    <label class="form-label text-start" for="descripcion">Descripción</label>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control form-control-sm" id="descripcion" name="descripcion"
+                            required></textarea>
 
-    </form>
+                    </div>
+
+                    <label class="form-label text-start" for="tipo_seccion_id">Tipo de sección</label>
+                    <div class="form-floating mb-3">
+                        <select class="form-select form-control-sm" id="tipo_seccion_id" name="tipo_seccion_id">
+                            <option value=""></option>
+                            {% for seccion in secciones %}
+                            <option value="{{ seccion.id_seccion }}">{{ seccion.nombre_seccion }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <label class="form-label text-start" for="preparacion">Preparación</label>
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control form-control-sm" id="preparacion" name="preparacion"
+                            required></textarea>
+
+                    </div>
+
+                    <label class="form-label text-start" for="ingredientes">Ingredientes</label>
+                    <div class="form-floating mb-3">
+                        <select class="form-control form-control-sm" name="ingredientes" id="ingredientes" multiple>
+                            {% for ingrediente in ingredientes %}
+                            <option value="{{ ingrediente.id_ingrediente }}">{{ ingrediente.nombre_ingrediente }}
+                            </option>
+                            {{ingrediente.nombre_ingrediente }}
+                            <br>
+                            {% endfor %}
+                        </select>
+
+                    </div>
+
+                    <label class="form-label text-start" for="imagen_receta">Subir imagen</label>
+                    <div class="input-group mb-3">
+                        <input type="file" class="form-control" id="imagen_receta" name="imagen_receta">
+
+                    </div>
+
+                    <div class="form-floating">
+                        <button type="submit" class="w-100 btn btn-lg btn-primary">Añadir receta</button>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
 </section>
+    
+    
+    {% endblock %}
 
-
-{% endblock %}
-{% block customJS %}
-<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
-<script>
-    new MultiSelectTag('ingredientes')  
-</script>
-
-{% endblock %}
+    {% block customJS %}
+    <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@3.0.1/dist/js/multi-select-tag.js"></script>
+    <script>
+        new MultiSelectTag('ingredientes')  
+    </script>
+    
+    {% endblock %}

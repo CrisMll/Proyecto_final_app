@@ -2,12 +2,6 @@
 
 {% block title %}Inicio Sesión{% endblock %}
 
-{% block customCSS %}
-
-<link rel="stylesheet" href="{{ url_for('static', filename='static/css/forms.css') }}">
-
-{% endblock %}
-
 {% block content %}
 
 {% with messages = get_flashed_messages() %}

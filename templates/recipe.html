@@ -22,8 +22,7 @@
 {% endif %}
 {% endif %}
 
-<img src="{{ url_for('static', filename='img/img_recetas/' + receta['nombre_receta']) + '.jpg' }}"
-    alt="{{ receta['nombre_receta'] }}">
+<img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}" class="card-img-top" alt="{{ receta['nombre_receta'] }}">
 
 <p>{{ receta['descripcion'] }}</p>
 

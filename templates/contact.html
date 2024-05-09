@@ -4,22 +4,31 @@
 
 {% block content %}
 
-        <div class="container mt-5">
-            <div class="card">
-                <img src="/static/img/logoCK.png" class="card-img-contact mx-auto d-block" alt="Imagen">
-                <div class="card-body">
-                    <h5 class="card-title">Contacto</h5>
-                    <a href="mailto:crispy.kitchen.app@gmail.com" class="bi bi-envelope mr-2"><i class="fas fa-envelope"></i> Gmail</a>
-                    <a href="https://www.instagram.com/crispy-kitchen-app" class="bi bi-instagram"><i class="fab fa-instagram"></i>
-                        Instagram</a>
+<div class="container-contact position-absolute top-0 start-0 w-100 h-100 overflow-hidden z-index-1">  
+    <section class="d-flex flex-column min-vh-100 bg-black bg-opacity-50 pt-10 pt-md-8 pb-7 pb-md-0">
+        <div class="container my-auto">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6 text-center">
+                    <div class="text-xs text-white text-opacity-75">
+                        <h1 class="text-white mb-4">Contacto</h1>
+                    </div>
+                    <p class="text-center text-white text-opacity-75 mb-7">
+                        Escríbenos un email con tus sugerencias o visita nuestro perfil de Instagram
+                    </p>
+                    <div class="btn btn-outline-primary text-white text-primary-hover mb-7 mb-md-0">
+                        <a href="mailto:crispy.kitchen.app@gmail.com" class="bi bi-envelope mr-2">Gmail</a>
+                        <a href="https://www.instagram.com/crispy-kitchen-app"><i class="fa-brands fa-square-instagram"></i>
+                            Instagram</a>
+                    </div>
                     <hr>
-                    
                     <div class="input-group mb-3 align-items-center">
-                        <span class="email-text"><a href="mailto:crispy.kitchen.app@gmail.com"
-                            id="emailLink">crispy.kitchen.app@gmail.com</a></span>
-                        <button id="copyEmail" class="bi bi-clipboard" type="button"  data-bs-toggle="tooltip" data-bs-placement="top" title="Click para copiar"></button>
+                        <span class="email-text"><a href="mailto:crispy.kitchen.app@gmail.com" id="emailLink">crispy.kitchen.app@gmail.com</a></span>
+                        <button id="copyEmail" class="bi bi-clipboard" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Click para copiar"></button>
                     </div>
                 </div>
             </div>
         </div>
+    </section>
+</div>
+
 {% endblock %}
