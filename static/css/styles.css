@@ -9,6 +9,7 @@
     --color-light-highlight: rgba(152, 76, 34, .4);
     --color-light-highlight-menu: rgba(152, 76, 34, .2);
     --color-header:rgba(79, 40, 11, 1);
+    --color-header-transp:rgba(79, 40, 11, .6);
 
     /* Dark mode */
     --color-dark-primary: rgba(34, 34, 34, 1);
@@ -48,55 +49,44 @@ body{
     border: none;
 }
 
+.btn-primary{
+    background-color: var(--color-header-transp);
+}
+
+.btn-primary:hover{
+    background-color: var(--color-header);
+}
+
 .btn a {
     font-size: 15px;
 }
 
 /*Nav-bar*/
 
-
 .navbar {
     font-family: var(--header-font);
     padding: 8px 2px 0 2px;
+    margin: 0;
     background-color: var(--color-light-primary);
-    position: fixed;
-    top: 0; 
-    width: 100%; 
-    z-index: 10000;
 }
 
-.navbar2 {
-    margin-top: 32px; 
-    z-index: 1000;
+.navbar-profile {
     padding: 0;
 }
 
+.navbar2{
+    padding: 0 0 8px 0;
+}
+
+.nav-item{
+    margin: 1px;
+}
 .nav-link:hover {
     color: var(--color-header);
 }
 
 .navbar-toggler:focus{
     box-shadow: none;
-}
-
-.navbar-profile {
-    z-index: 2001;
-}
-
-.navbar2 {
-    position: sticky;
-    top: 32px;
-    transition: transform 0.3s ease-in-out;
-}
-
-.show ~ .navbar2 {
-    transform: translateY(150px);
-}
-
-@media (max-width: 900px) {
-    .navbar-collapse {
-        position: relative;
-    }
 }
 
 a {
@@ -113,9 +103,6 @@ ul {
 .btn-outline-light:hover{
     background-color: var(--color-light-highlight);
 }
-
-
-
 
 
 
@@ -248,4 +235,14 @@ ul {
     margin: 10px 0 0 0;
     padding: 0;
     font-size: 2vw;
+}
+
+/* Forms */
+
+.header-form{
+    font-family: var(--header-font);
+}
+.p-form{ 
+    font-family: var(--text-font);
+    font-size: 1rem;
 }

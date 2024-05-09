@@ -24,14 +24,49 @@
 
 <body class="h-100 text-center">
 
-    <!--? Barra de navegación -->
+<!-- Barra de navegación -->
+<nav class="navbar text-decoration-none d-lg-block">
+    <div class="container-fluid justify-content-end">
+        {% if current_user.is_authenticated %}
+        <ul class="nav-item dropdown list-unstyled">
+            <li>
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end list-unstyled" aria-labelledby="userDropdown">
+                    <li><span class="dropdown-item-text">{{ current_user.name }}</span></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    {% if current_user.role == 1 %}
+                    <li><a class="dropdown-item" href="{{ url_for('admin') }}">ADMIN - CONTROL</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('admin_profile') }}">ADMIN - MENU</a></li>
+                    {% elif current_user.role == 2 %}
+                    <li><a class="dropdown-item" href="{{ url_for('profile') }}">PERFIL</a></li>
+                    {% endif %}
+                    <li><a class="dropdown-item" href="{{ url_for('logout') }}">SALIR</a></li>
+                </ul>
+            </li>
+        </ul>
+        {% else %}
+        <button type="button" class="btn btn-outline-light me-2"><a href="{{ url_for('login') }}">Inicio Sesión
+            </a></button>
+        <button type="button" class="btn btn-outline-light me-2"><a href="{{ url_for('signup') }}">Registro
+            </a></button>
+        {% endif %}
+    </div>
+</nav>
 
-    <!-- Barra de navegación perfil en pantalla pequeña -->
+<!-- Barra de navegación perfil en pantalla pequeña -->
 <nav class="navbar navbar-profile d-lg-none">
     <div class="container-fluid justify-content-end">
-        
+        {% if current_user.is_authenticated %}
         <li class="nav-item dropdown list-unstyled">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+        </li>
+        {% else %}
+        <li class="nav-item dropdown list-unstyled align-items-center">
+            <a class="nav-link dropdown-toggle d-flex " href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
                 <i class="fa-regular fa-user"></i>
             </a>
@@ -40,35 +75,6 @@
                 <li><a class="dropdown-item" href="{{ url_for('signup') }}">Registro</a></li>
             </ul>
         </li>
-    </div>
-</nav>
-
-<nav class="navbar text-decoration-none d-none d-lg-block">
-    <div class="container-fluid justify-content-end">
-        {% if current_user.is_authenticated %}
-        <li class="nav-item dropdown list-unstyled">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                <i class="fa-regular fa-user"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end list-unstyled" aria-labelledby="userDropdown">
-                <li><span class="dropdown-item-text">{{ current_user.name }}</span></li>
-                <li>
-                    <hr class="dropdown-divider">
-                </li>
-                {% if current_user.role == 1 %}
-                <li><a class="dropdown-item" href="{{ url_for('admin') }}">ADMIN - CONTROL</a></li>
-                <li><a class="dropdown-item" href="{{ url_for('admin_profile') }}">ADMIN - MENU</a></li>
-                {% elif current_user.role == 2 %}
-                <li><a class="dropdown-item" href="{{ url_for('profile') }}">PERFIL</a></li>
-                {% endif %}
-                <li><a class="dropdown-item" href="{{ url_for('logout') }}">SALIR</a></li>
-            </ul>
-        </li>
-        {% else %}
-        <button type="button" class="btn btn-outline-light me-2"><a href="{{ url_for('login') }}">Inicio Sesión
-            </a></button>
-        <button type="button" class="btn btn-outline-light me-2"><a href="{{ url_for('signup') }}">Registro </a></button>
         {% endif %}
     </div>
 </nav>
