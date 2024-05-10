@@ -38,3 +38,10 @@ document.getElementById('copyEmail').addEventListener('mouseout', function () {
         isClicked = false;
     }
 });
+
+
+// Manejo del interruptor del modo oscuro
+
+function toggleDarkMode() {
+    document.body.classList.toggle('dark');
+}

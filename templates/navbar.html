@@ -74,6 +74,7 @@
                 </ul>
             </li>
         </ul>
+        
     </div>
 
 </nav>
@@ -82,14 +83,18 @@
     <div class="container-fluid justify-content-between">
 
         <a class="navbar-brand" href="/">Crispy Kitchen</a>
+        <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+        <label for="dark-mode-toggle"><i class="fa-solid fa-toggle-on"></i></label>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarNav">
             <ul class="navbar-nav text-center">
+                
+                    
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="homepage" href="/">Home</a>
                 </li>

@@ -58,6 +58,64 @@ body {
     background-color: var(--color-header);
 }
 
+.btn-menu{
+    min-width: 200px;
+}
+
+/* Dark mode*/
+
+.dark, .dark .navbar, .dark h2 {
+    transition: all 1s ease;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    -o-transition: all 1s ease;
+}
+
+.dark {
+    background-color: var(--color-dark-primary);
+    color: #f5f5f5;
+}
+
+.dark .navbar-brand{
+    color: #f5f5f5;
+}
+
+.dark .navbar {
+    background-color: var(--color-dark-secondary);
+}
+
+.dark button.btn.btn-outline-light.me-2 a{
+    color: #f5f5f5;
+}
+
+.dark button.btn.btn-outline-light.me-2{
+    color: #6c6685;
+}
+
+.dark h2 {
+    color: #f5f5f5;
+}
+
+.dark .btn{
+    background-color: #6c6685;
+}
+
+.dark .fa-toggle-on{
+    color: #6c6685;
+}
+
+
+.dark .navbar .nav-link { 
+    color: #f5f5f5;
+}
+
+.fa-toggle-on{
+    font-size: 1.5em;
+    color: var(--color-dark-primary);
+    cursor: pointer;
+}
+
 /*Nav-bar*/
 .navbar {
     font-family: var(--header-font);
@@ -145,8 +203,9 @@ ul {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(77, 44, 42, 0.4);
+    background: rgba(85, 62, 60, 0.4);
 }
+
 
 .card-img-top {
     width: 100%;
@@ -166,10 +225,20 @@ ul {
 .image-caption {
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    background: rgba(7, 7, 7, 0.5);
     color: white;
     z-index: 1;
+    cursor: pointer;
+    padding: 0;
+}
+
+
+.card-title{
+    background: rgba(66, 49, 37, 0.5);
+    min-width: 300px;
+    text-align: center;
+    padding: 15px;
+    font-size: 2rem;
+    
 }
 
 .card-menu {
@@ -182,6 +251,7 @@ ul {
     border: none;
 }
 
+
 .card-menu:hover {
     background-color: var(--color-light-highlight);
 }
@@ -191,33 +261,31 @@ ul {
 }
 
 .card-menu:hover .image-link::after {
-    background: rgba(122, 50, 32, 0.5);
+    background: rgba(80, 37, 27, .5);
 }
 
 .card-menu:hover a {
     filter: blur(1px);
 }
 
-.card-img-top-recetas {
-    position: relative;
+/* menu de recetas */
+.card-recetas{
+    background-color: var(--color-dark-highlight);
 }
 
-.card-title-recetas{
+.card-recetas:hover .image-link-recetas::after{
+    background-color: rgba(90, 62, 49, 0.6);
+}
+
+.image-link-recetas::after {
+    content: "";
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: white;
-    font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(97, 71, 70, 0.4);
 }
-
-.col{ 
-    margin: 0;
-    padding: 0;
-    border: none;
-}
-
 
 /* Headers */
 
@@ -227,7 +295,7 @@ ul {
     flex-direction: column;
     color: white;
     text-align: left;
-    text-shadow: .25em .25em .5em rgba(122, 115, 115, 0.8);
+    text-shadow: .25em .25em .5em rgba(122, 115, 115, .8);
     position: relative;
     
 }

@@ -22,7 +22,7 @@
     {% block customCSS %}{% endblock %}
 </head>
 
-<body class="h-100">
+<body class="w-100">
 
 <!--? Contenido específico de cada vista -->
 {% include 'navbar.html' %}
@@ -35,7 +35,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/9feab16eec.js" crossorigin="anonymous"></script>
-    <script src="/static/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <!--? Custom JS de cada vista si lo hay-->
     {% block customJS %}{% endblock %}
 

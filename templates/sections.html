@@ -4,23 +4,27 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container d-flex flex-column align-items-center">
     <h1 class="text-center p-3">Recetas {{ seccion['nombre_seccion'] }}</h1>
-    <div class="row no-gutters row-cols-2 row-cols-md-3 row-cols-lg-3 m-0">
-        {% for receta in recetas %}
-        <div class="col">
-            <div class="card mb-4">
-                <a href="{{ url_for('get_recipe', id=receta.id_receta) }}">
-                    <img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}"
-                        class="card-img-top-recetas" alt="{{ receta['nombre_receta'] }}">
-                </a>
-                <div class="card-body">
-                    <h2 class=" card-title-recetas text-lg font-semibold">{{ receta['nombre_receta'] }}</h2>
-                </div>
+    <div class="container-fluid">
+        <div class="row m-2">
+            {% for receta in recetas %}
+            <div class="col-lg-4 col-md-4 col-sm-4 p-2">
+                <article class="card card-recetas">
+                    <a class="image-link-recetas" href="{{ url_for('get_recipe', id=receta.id_receta) }}">
+                        <img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}" 
+                        class="card-img-top card-img-top-recetas" alt="receta de {{ receta['nombre_receta'] }}">
+                        <div class="card-body image-caption text-center text-lg-center fs-3 p-2 bg-dark bg-opacity-50 m-auto">
+                            <h3 class="card-text fs-3">{{ receta['nombre_receta'] }}</h3>
+                        </div>
+                    </a>
+                </article>
             </div>
+            {% endfor %}
         </div>
-        {% endfor %}
     </div>
-    <button class="w-100 btn btn-primary" onclick="goBack()">Volver</button>
+    <button class="btn btn-primary btn-menu btn-lg p-3 m-3" onclick="goBack()">Volver</button>
 </div>
+
+
 {% endblock %}
