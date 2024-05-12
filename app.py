@@ -233,6 +233,15 @@ def admin_profile():
     recetas = response.data
     return render_template("admin/admin_profile.html", recetas=recetas)
 
+# Vista control de admin principal
+@app.route('/admin/control')
+def admin_control():
+    response = supabase.table("recetas").select("id_receta, nombre_receta, imagen_receta, ingredientes, preparacion").execute()
+    recetas = response.data
+    return render_template("admin/admin_control.html", recetas=recetas)
+
+    
+
 
 
 #? RUTA DE RECETAS FAVORITAS

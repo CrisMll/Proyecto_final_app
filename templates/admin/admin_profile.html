@@ -19,12 +19,12 @@
     {% endif %}
 {% endwith %}
 
-<div class="container">
+<section class="container container-recipe gap-2 d-flex justify-content-center align-items-center flex-column p-5">
     <h1 class="text-center">Perfil de {{ current_user.name }}</h1>
     <p><strong>Nombre:</strong> {{ current_user.name }}</p>
     <p><strong>Correo Electrónico:</strong> {{ current_user.email }}</p>
     <h2>Recetas de la web</h2>
-    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
         {% for receta in recetas %}
             <div class="col">
                 <div class="card card-recetas mb-4">
@@ -40,6 +40,6 @@
             </div>
         {% endfor %}
     </div>
-</div>
+</section>
 
 {% endblock %}

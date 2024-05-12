@@ -21,7 +21,8 @@
                             <hr class="dropdown-divider">
                         </li>
                         {% if current_user.role == 1 %}
-                            <li><a class="dropdown-item" href="{{ url_for('admin') }}">ADMIN - CONTROL</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('admin_control') }}">ADMIN - PANEL CONTROL</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('admin') }}">ADMIN - AÑADIR</a></li>
                             <li><a class="dropdown-item" href="{{ url_for('admin_profile') }}">ADMIN - MENU</a></li>
                         {% elif current_user.role == 2 %}
                             <li><a class="dropdown-item" href="{{ url_for('profile') }}">PERFIL</a></li>
@@ -61,8 +62,9 @@
                             <hr class="dropdown-divider">
                         </li>
                         {% if current_user.role == 1 %}
-                            <li><a class="dropdown-item" href="{{ url_for('admin') }}">ADMIN - CONTROL</a></li>
-                            <li><a class="dropdown-item" href="{{ url_for('admin_profile') }}">ADMIN - MENU</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('admin_control') }}">ADMIN - PANEL CONTROL</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('admin') }}">ADMIN - AÑADIR</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('admin_profile') }}">ADMIN - MENU</a></li>
                         {% elif current_user.role == 2 %}
                             <li><a class="dropdown-item" href="{{ url_for('profile') }}">PERFIL</a></li>
                         {% endif %}
