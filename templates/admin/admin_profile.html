@@ -27,12 +27,12 @@
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
         {% for receta in recetas %}
             <div class="col">
-                <div class="card mb-4">
-                    <a href="{{ url_for('get_recipe', id=receta.id_receta) }}">
+                <div class="card card-recetas mb-4">
+                    <a class="image-link-recetas" href="{{ url_for('get_recipe', id=receta.id_receta) }}">
                         <img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}" class="card-img-top" alt="{{ receta['nombre_receta'] }}">
                         
-                        <div class="card-body">
-                            <p class="card-title">{{ receta['nombre_receta'] }}</p>
+                        <div class="card-body image-caption text-center text-lg-center fs-3 p-2 bg-dark bg-opacity-50 m-auto">
+                            <p class="card-text fs-3">{{ receta['nombre_receta'] }}</p>
                         </div>
                     </a>    
                 </div>

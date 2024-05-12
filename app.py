@@ -65,9 +65,16 @@ def get_section(id):
 def get_recipe(id):
     response = supabase.table("secciones").select("id_seccion, nombre_seccion").execute()
     secciones = response.data
-    response = supabase.table("recetas").select("id_receta, nombre_receta, imagen_receta, ingredientes, preparacion").eq("id_receta", id).execute()
+    response = supabase.table("recetas").select("id_receta, nombre_receta, imagen_receta, ingredientes, descripcion, preparacion").eq("id_receta", id).execute()
     receta = response.data[0]
-    return render_template("recipe.html", receta=receta, secciones=secciones)
+    response = supabase.table("ingredientes_recetas").select("*").eq("id_tipo_receta", id).execute()
+    ingredientes_recetas = response.data
+    ingredientes = []
+    for ingrediente_receta in ingredientes_recetas:
+        response = supabase.table("ingredientes").select("nombre_ingrediente").eq("id_ingrediente", ingrediente_receta["id_tipo_ingrediente"]).execute()
+        ingrediente = response.data[0]
+        ingredientes.append(ingrediente)
+    return render_template("recipe.html", receta=receta, secciones=secciones, ingredientes=ingredientes)
 
 @app.route("/menu")
 def menu():

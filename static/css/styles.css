@@ -271,6 +271,7 @@ ul {
 /* menu de recetas */
 .card-recetas{
     background-color: var(--color-dark-highlight);
+    border: none;
 }
 
 .card-recetas:hover .image-link-recetas::after{
@@ -285,6 +286,13 @@ ul {
     width: 100%;
     height: 100%;
     background: rgba(97, 71, 70, 0.4);
+}
+
+/* Pagina receta */
+
+.card-img-top-pagina-receta{
+    min-width: min-content;
+    width: 400px;
 }
 
 /* Headers */
