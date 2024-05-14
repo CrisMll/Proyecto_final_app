@@ -1,5 +1,8 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages, send_from_directory
+import logging
+from logging.handlers import RotatingFileHandler
+from datetime import datetime, timedelta
+from flask import Flask, render_template, request, redirect, url_for, flash, get_flashed_messages, send_from_directory, session
 from dotenv import load_dotenv
 from supabase import create_client
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
@@ -16,12 +19,13 @@ from forms import RegistrationForm
 from models.entities.user import User
 
 #Configuración inicial de la app
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 application = app
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 login_manager_app=LoginManager(app)
 login_manager_app.login_view = 'login'
-csrf=CSRFProtect()
+csrf=CSRFProtect(app)
+app.permanent_session_lifetime = timedelta(minutes=15)
 
 
 #?Conexion a la bbdd de supabase
@@ -41,14 +45,20 @@ def allowed_file(filename):
 #? RUTA HOME Y PRINCIPALES DE RECETAS
 
 @app.route("/")
-def home():
+def home():   
     response = supabase.table("secciones").select("nombre_seccion, imagen_seccion, id_seccion").execute()
     secciones = response.data
-    for seccion in secciones:
-        print(seccion['id_seccion'])  
     response = supabase.table("recetas").select("nombre_receta").execute()
     recetas = response.data
     return render_template("index.html", secciones=secciones, recetas=recetas)
+
+@app.route("/home")
+def home_in():
+    response = supabase.table("secciones").select("nombre_seccion, imagen_seccion, id_seccion").execute()
+    secciones = response.data
+    response = supabase.table("recetas").select("nombre_receta").execute()
+    recetas = response.data
+    return render_template("home_in.html", secciones=secciones, recetas=recetas)
 
 @app.route("/sections/<id>")
 def get_section(id):
@@ -143,12 +153,29 @@ def signup():
 
     return render_template('login/signup.html', form=form)
 
+#manejo de errores para el hosting web. Crea un log de errores.
+@app.errorhandler(500)
+def internal_error(exception):
+    app.logger.exception(exception)
+    file_handler = RotatingFileHandler('error_fun.log', 'a', 1 * 1024 * 1024, 10)
+    file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+    app.logger.setLevel(logging.INFO)
+    file_handler.setLevel(logging.INFO)
+    app.logger.addHandler(file_handler)
+    app.logger.info('microblog startup')
+    return render_template('500.html'), 500
+
 #logout
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
     return redirect(url_for('home'))
+
+#manejo de cierre de sesión por inactividad
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
 
 #mostrar perfil del usuario
 @app.route('/profile')
@@ -188,43 +215,50 @@ def admin_recipe():
             imagen_receta.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 
             try:
-            #? Control de errores para insertar receta en la tabla
+                # Control de errores para insertar receta en la tabla 'recetas'
                 response_receta = supabase.table('recetas').insert({
                     'nombre_receta': nombre_receta,
-                    'imagen_receta': filename, #? de momento solo el nombre
+                    'imagen_receta': filename, # de momento solo el nombre
                     'descripcion': descripcion,
                     'tipo_seccion_id': tipo_seccion_id,
                     'preparacion': preparacion,
                 }).execute()
-                
-                # Paso para obtener el id de la receta recién creada para pasarlo en el siguiente insert
+
                 response = supabase.table('recetas').select('id_receta').eq('nombre_receta', nombre_receta).execute()    
                 id_receta = response.data[0]
-                
-                #? Control de errores para hacer el insert de ingredientes e id
+
                 try:
+                    # Insertar ingredientes en la tabla 'ingredientes_recetas'
                     for ingrediente in ingredientes:
                         ingrediente = int(ingrediente)
+                        print(type(ingrediente))
+                        print(ingrediente)
                         response = supabase.table('ingredientes_recetas').insert({
                             'id_tipo_receta': id_receta['id_receta'],
-                            'id_tipo_ingrediente':ingrediente
-                        }).execute()                        
-                    
+                            'id_tipo_ingrediente': ingrediente
+                        }).execute()
+                        response = supabase.table('ingredientes_recetas_prueba').select('*').execute()    
+                        receta = response.data
+                        print(receta)
+
                 except Exception as e:
-                    print(f"Error: {e}")
-                    flash('Error al añadir ingredientes.', 'error')
+                    print(f"Error al añadir ingredientes: {e}")
+                    flash(f'Error al añadir ingredientes: {e}', 'error')
                     return redirect(url_for('error_405'))
-                    
+
                 flash('Receta añadida', 'success')
                 return render_template('admin/admin_recipe.html')
-            
+
             #? Si falla el insert    
             except Exception as e:
-                print(f"Error: {e}")
-                flash('Error al añadir la receta. Vuelve a intentarlo.', 'error')
+                print(f"Error al añadir la receta: {e}")
+                flash(f'Error al añadir la receta: {e}', 'error')
                 return redirect(url_for('error_405'))
-    
+
     return render_template('admin/admin_recipe.html')
+
+
+
 
 #Vista del perfil de admin
 @app.route('/admin/profile')
@@ -239,9 +273,6 @@ def admin_control():
     response = supabase.table("recetas").select("id_receta, nombre_receta, imagen_receta, ingredientes, preparacion").execute()
     recetas = response.data
     return render_template("admin/admin_control.html", recetas=recetas)
-
-    
-
 
 
 #? RUTA DE RECETAS FAVORITAS
@@ -286,7 +317,6 @@ def error_405():
 if __name__ == '__main__':
     #?configuracion para poder usar la configuracion para desarrollo creada con el objeto config y su diccionario
     csrf.init_app(app)
-    #app.register_error_handler(404, status_404)
     app.run(debug=True)
 
 

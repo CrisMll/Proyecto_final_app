@@ -446,3 +446,22 @@ ul {
 .container-contact a{ 
     font-family: var(--subheader-font);
 }
+
+/* Botón de vovler arriba*/
+.back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #df8450;
+    color: white;
+    border-radius: 50%;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    display: none;
+}
+
+.back-to-top:hover {
+    background-color: #946a32;
+}

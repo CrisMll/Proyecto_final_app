@@ -1,8 +1,8 @@
+
 //? Función para el botón de volver en la sección
 function goBack() {
     window.history.back();
 }
-
 
 //? Funcion para copiar el email de la sección de contacto
 
@@ -40,8 +40,28 @@ document.getElementById('copyEmail').addEventListener('mouseout', function () {
 });
 
 
-// Manejo del interruptor del modo oscuro
+//? Manejo del interruptor del modo oscuro
 
 function toggleDarkMode() {
     document.body.classList.toggle('dark');
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("back-to-top");
+
+    window.addEventListener("scroll", function() {
+        if (window.scrollY > 300) { // Mostrar el botón cuando el usuario ha desplazado hacia abajo más de 300px
+            btn.style.display = "block";
+        } else {
+            btn.style.display = "none";
+        }
+    });
+
+    btn.addEventListener("click", function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // Desplazamiento suave hacia arriba
+        });
+    });
+});
