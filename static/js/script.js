@@ -46,11 +46,13 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark');
 }
 
+//? Boton vovler arriba
+
 document.addEventListener("DOMContentLoaded", function() {
     const btn = document.getElementById("back-to-top");
 
     window.addEventListener("scroll", function() {
-        if (window.scrollY > 300) { // Mostrar el botón cuando el usuario ha desplazado hacia abajo más de 300px
+        if (window.scrollY > 50) { 
             btn.style.display = "block";
         } else {
             btn.style.display = "none";
@@ -61,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
         e.preventDefault();
         window.scrollTo({
             top: 0,
-            behavior: 'smooth' // Desplazamiento suave hacia arriba
+            behavior: 'smooth' 
         });
     });
 });

@@ -93,6 +93,12 @@
 
 {% endblock %}
 
+{% block footer %}
+<a href="#" id="back-to-top" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+</a>
+{% endblock %}
+
 {% block customJS %}
 <script src="{{ url_for('static', filename='js/preloader.js') }}"></script>
 {% endblock %}
