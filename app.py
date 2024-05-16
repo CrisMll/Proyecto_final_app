@@ -79,11 +79,16 @@ def get_recipe(id):
     receta = response.data[0]
     response = supabase.table("ingredientes_recetas").select("*").eq("id_tipo_receta", id).execute()
     ingredientes_recetas = response.data
+    
     ingredientes = []
     for ingrediente_receta in ingredientes_recetas:
         response = supabase.table("ingredientes").select("nombre_ingrediente").eq("id_ingrediente", ingrediente_receta["id_tipo_ingrediente"]).execute()
         ingrediente = response.data[0]
-        ingredientes.append(ingrediente)
+        response =  supabase.table("ingredientes_recetas").select("cantidad").eq("id_tipo_ingrediente", ingrediente_receta["id_tipo_ingrediente"]).execute()
+        cantidad = response.data[0]['cantidad']
+        ingrediente_con_cantidad = {'nombre_ingrediente': ingrediente['nombre_ingrediente'], 'cantidad': cantidad}
+        ingredientes.append(ingrediente_con_cantidad)
+        
     return render_template("recipe.html", receta=receta, secciones=secciones, ingredientes=ingredientes)
 
 @app.route("/menu")

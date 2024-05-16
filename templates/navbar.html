@@ -1,18 +1,21 @@
 <nav class="navbar text-decoration-none">
-    <div class="container-fluid d-none d-lg-flex justify-content-end">
+    <div class="container-fluid d-none d-lg-flex justify-content-end align-items-center gap-3">
+        
         {% if current_user.is_authenticated %}
+            <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+            <label for="dark-mode-toggle" class="fa-solid fa-circle-half-stroke fs-3"></label>
             <ul class="nav-item dropdown list-unstyled">
                 <li>
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle p-0 m-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         {% if current_user.is_authenticated %}
                             {% if current_user.role == 1 %}
-                                <i class="fa-solid fa-user-tie"></i>
+                                <i class="fa-solid fa-user-tie fs-3 p-0"></i>
                             {% elif current_user.role == 2 %}
-                                <i class="fa-regular fa-user"></i>
+                                <i class="fa-regular fa-user fs-3 p-0"></i>
                             {% endif %}
                         {% else %}
-                            <i class="fa-regular fa-user"></i> 
+                            <i class="fa-regular fa-user fs-3 p-0"></i> 
                         {% endif %}
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end list-unstyled" aria-labelledby="userDropdown">
@@ -32,27 +35,33 @@
                 </li>
             </ul>
         {% else %}
+        <section class="navbar-profile-buttons d-flex justify-content-lg-end gap-3 align-items-center">
+            <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+            <label for="dark-mode-toggle" class="fa-solid fa-circle-half-stroke me-2"></label>
             <button type="button" class="btn btn-outline-light me-2"><a href="{{ url_for('login') }}">Inicio Sesión
                 </a></button>
             <button type="button" class="btn btn-outline-light me-2"><a href="{{ url_for('signup') }}">Registro
                 </a></button>
+        </section>
         {% endif %}
     </div>
 
     <!-- Barra de navegación perfil en pantalla pequeña -->
-    <div class="container-fluid justify-content-end d-lg-none">
-        <ul class="nav-item dropdown list-unstyled">
+    <div class="container-fluid container-fluid-small justify-content-end d-lg-none d-flex flex-row align-items-center">
+        <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+        <label for="dark-mode-toggle" class="fa-solid fa-circle-half-stroke fs-3 me-2"></label>
+        <ul class="nav-item dropdown list-unstyled ">
             <li>
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                <a class="nav-link dropdown-toggle p-0 ms-2" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     {% if current_user.is_authenticated %}
                         {% if current_user.role == 1 %}
-                            <i class="fa-solid fa-user-tie"></i>
+                            <i class="fa-solid fa-user-tie fs-3"></i>
                         {% elif current_user.role == 2 %}
-                            <i class="fa-regular fa-user"></i>
+                            <i class="fa-regular fa-user fs-3"></i>
                         {% endif %}
                     {% else %}
-                        <i class="fa-regular fa-user"></i> 
+                        <i class="fa-regular fa-user fs-3"></i> 
                     {% endif %}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end list-unstyled" aria-labelledby="userDropdown">
@@ -81,19 +90,15 @@
 
 </nav>
 
-<nav class="navbar navbar-menu-principal navbar-expand-lg navbar-light text-decoration-none">
-    <div class="container-fluid justify-content-between">
-
+<nav class="navbar navbar-menu-principal navbar-expand-lg p-0 navbar-light text-decoration-none d-flex justify-content-between">
+    <div class="container-fluid justify-content-lg-end justify-content-between gap-3 align-items-center">
         <a class="navbar-brand" href="/home">Crispy Kitchen</a>
-        <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
-        <label for="dark-mode-toggle"><i class="fa-solid fa-toggle-on"></i></label>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        <button class="navbar-toggler text-bg-light text-opacity-75" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarNav">
+        <div class="collapse navbar-collapse justify-content-between justify-content-lg-end" id="navbarNav">
             <ul class="navbar-nav text-center">
                 
                     

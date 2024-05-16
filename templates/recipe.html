@@ -1,3 +1,4 @@
+
 {% extends './base.html' %}
 
 {% block title %}{{ receta['nombre_receta'] }}{% endblock %}
@@ -34,7 +35,7 @@
     <h2>Ingredientes</h2>
     <ul>
         {% for ingrediente in ingredientes %}
-        <li>{{ ingrediente['nombre_ingrediente'] }}</li>
+        <li>{{ ingrediente['nombre_ingrediente'] }} - {{ ingrediente['cantidad'] }}</li>
         {% endfor %}
     </ul>
     <h2>Preparación</h2>

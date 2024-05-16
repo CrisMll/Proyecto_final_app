@@ -1,9 +1,7 @@
 /* Variables de la web */
-
 :root {
     /* COLORS */
     /*Light mode*/
-
     --color-light-primary: rgba(250, 245, 239, 0.5);
     --color-light-secondary: rgba(254, 245, 240, 1);
     --color-light-terciary: rgba(94, 72, 60, .4);
@@ -19,7 +17,6 @@
     --color-dark-highlight: rgba(157, 122, 165, .8);
 
     /* FONTS */
-
     --header-font: 'Montserrat', 'Open Sans', 'Helvetica Neue', sans-serif;
     --header-font-size: 60px;
     --header-font-weight: bold;
@@ -32,16 +29,13 @@
 
     --button-font: 'Lato', sans-serif;
 
-
     --text-font: Roboto, 'Open Sans', 'Helvetica Neue', sans-serif;
     --text-font-size: 16px;
 
     --subtext-font-size: 14px;
-
 }
 
 /* Generales */
-
 body {
     min-width: 400px;
 }
@@ -59,12 +53,11 @@ body {
     background-color: var(--color-light-highlight-menu);
 }
 
-.btn-menu{
+.btn-menu {
     min-width: 200px;
 }
 
-/* Dark mode*/
-
+/* Dark mode */
 .dark, .dark .navbar, .dark h2 {
     transition: all 1s ease;
     -webkit-transition: all 1s ease;
@@ -75,49 +68,48 @@ body {
 
 .dark {
     background-color: var(--color-dark-primary);
-    color: #f5f5f5;
+    color: rgba(245, 245, 245, 1);
 }
 
-.dark .navbar-brand{
-    color: #f5f5f5;
+.dark .navbar-brand {
+    color: rgba(245, 245, 245, 1);
 }
 
 .dark .navbar {
     background-color: var(--color-dark-secondary);
 }
 
-.dark button.btn.btn-outline-light.me-2 a{
-    color: #f5f5f5;
+.dark button.btn.btn-outline-light.me-2 a {
+    color: rgba(245, 245, 245, 1);
 }
 
-.dark button.btn.btn-outline-light.me-2{
-    color: #6c6685;
+.dark button.btn.btn-outline-light.me-2 {
+    color: rgba(108, 102, 133, 1);
 }
 
 .dark h2 {
-    color: #f5f5f5;
+    color: rgba(245, 245, 245, 1);
 }
 
-.dark .btn{
-    background-color: #6c6685;
+.dark .btn {
+    background-color: rgba(108, 102, 133, 1);
 }
 
-.dark .fa-toggle-on{
-    color: #6c6685;
+.dark .fa-toggle-on {
+    color: rgba(108, 102, 133, 1);
 }
 
-
-.dark .navbar .nav-link { 
-    color: #f5f5f5;
+.dark .navbar .nav-link {
+    color: rgba(245, 245, 245, 1);
 }
 
-.fa-toggle-on{
+.fa-toggle-on {
     font-size: 1.5em;
     color: var(--color-dark-primary);
     cursor: pointer;
 }
 
-/*Nav-bar*/
+/* Nav-bar */
 .navbar {
     font-family: var(--header-font);
     padding: 8px 2px 0 2px;
@@ -125,31 +117,30 @@ body {
     background-color: var(--color-light-primary);
 }
 
-.navbar-menu-principal{
+.navbar-menu-principal {
     padding: 0 0 8px 0;
 }
 
-.nav-item{
+.nav-item {
     margin: 1px;
 }
 
-.nav-link{ 
+.nav-link {
     padding-top: 1.25rem;
-    font-size: 1.5rem;;
+    font-size: 1.5rem;
 }
 
 .nav-link:hover {
     color: var(--color-header);
 }
 
-.navbar-toggler:focus{
+.navbar-toggler:focus {
     box-shadow: none;
 }
 
 .btn-outline-light {
     font-size: 1.25rem;
 }
-
 
 a {
     text-decoration: none;
@@ -165,14 +156,12 @@ ul {
     background-color: var(--color-light-highlight);
 }
 
-.dropdown-menu-recetas{
+.dropdown-menu-recetas {
     width: fit-content;
     margin: auto;
 }
 
-
-/* Galery menus*/
-
+/* Galery menus */
 .container-menu {
     background: url('../img/rsz_natural-wooden-background.jpg');
     padding: 6rem 0 6rem 0;
@@ -207,14 +196,12 @@ ul {
     background: rgba(85, 62, 60, 0.4);
 }
 
-
 .card-img-top {
     width: 100%;
     height: 300px;
     object-fit: cover;
     transition: transform 0.3s ease;
     border-radius: 0;
-
 }
 
 .card-img-contact {
@@ -226,20 +213,18 @@ ul {
 .image-caption {
     position: absolute;
     top: 50%;
-    color: white;
+    color: rgba(255, 255, 255, 1);
     z-index: 1;
     cursor: pointer;
     padding: 0;
 }
 
-
-.card-title{
+.card-title {
     background: rgba(66, 49, 37, 0.5);
     min-width: 300px;
     text-align: center;
     padding: 15px;
     font-size: 2rem;
-    
 }
 
 .card-menu {
@@ -251,7 +236,6 @@ ul {
     -o-border-radius: 0;
     border: none;
 }
-
 
 .card-menu:hover {
     background-color: var(--color-light-highlight);
@@ -270,13 +254,13 @@ ul {
     -webkit-filter: blur(.5px);
 }
 
-/* menu de recetas */
-.card-recetas{
+/* Menu de recetas */
+.card-recetas {
     background-color: var(--color-dark-highlight);
     border: none;
 }
 
-.card-recetas:hover .image-link-recetas::after{
+.card-recetas:hover .image-link-recetas::after {
     background-color: rgba(90, 62, 49, 0.6);
 }
 
@@ -291,8 +275,7 @@ ul {
 }
 
 /* Pagina receta */
-
-.card-img-top-pagina-receta{
+.card-img-top-pagina-receta {
     min-width: min-content;
     width: 400px;
     margin: 1rem;
@@ -303,7 +286,7 @@ ul {
     -o-border-radius: 10px;
 }
 
-.container-recipe{
+.container-recipe {
     font-family: var(--text-font);
     background-color: var(--color-light-primary);
     margin: 100px auto 50px auto;
@@ -315,43 +298,37 @@ ul {
     box-shadow: var(--bs-box-shadow-lg);
 }
 
-.container-recipe h2 , .container-recipe h1{
+.container-recipe h2, .container-recipe h1 {
     font-family: var(--header-font);
 }
 
-.container-recipe ul{
+.container-recipe ul {
     list-style-type: circle;
 }
 
 /* Admin */
-
-.card-img-top-recetas-admin{
+.card-img-top-recetas-admin {
     width: fit-content;
     padding: 25px;
-    
 }
 
-.image-link-recetas-admin{
-    background-color: #ffffff;
+.image-link-recetas-admin {
+    background-color: rgba(255, 255, 255, 1);
 }
 
-.btn-primary-admin:hover{
+.btn-primary-admin:hover {
     background-color: var(--color-header-transp);
 }
 
-
-
 /* Headers */
-
 .cover-container {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    color: white;
+    color: rgba(255, 255, 255, 1);
     text-align: left;
     text-shadow: .25em .25em .5em rgba(122, 115, 115, .8);
     position: relative;
-    
 }
 
 .cover-container::before {
@@ -387,7 +364,6 @@ ul {
 }
 
 /* Forms */
-
 .header-form {
     font-family: var(--header-font);
 }
@@ -407,7 +383,6 @@ ul {
 }
 
 /* Contact */
-
 .container-contact {
     position: relative;
     top: 0;
@@ -417,7 +392,6 @@ ul {
     background: url('../img/cocina2.jpg');
     background-size: cover;
     background-position: center;
-
 }
 
 .container-contact::before {
@@ -427,10 +401,10 @@ ul {
     right: 0;
     bottom: 0;
     left: 0;
-    background: rgba(0, 0, 0, 0.5); 
+    background: rgba(0, 0, 0, 0.5);
 }
 
-.transparent-card{
+.transparent-card {
     background: rgba(170, 170, 170, 0.2);
     border-radius: 15px;
     padding: 20px;
@@ -438,30 +412,29 @@ ul {
     color: var(--color-light-secondary);
 }
 
-.container-contact a, .container-contact p, .container-contact h1{
+.container-contact a, .container-contact p, .container-contact h1 {
     color: var(--color-light-secondary);
-    text-shadow:.25em .25em .5em rgba(2, 1, 1, 0.8);
+    text-shadow: .25em .25em .5em rgba(2, 1, 1, 0.8);
 }
 
-.container-contact a{ 
+.container-contact a {
     font-family: var(--subheader-font);
 }
 
-/* Botón de vovler arriba*/
+/* Botón de volver arriba */
 .back-to-top {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    background-color: #df8450;
-    color: white;
+    background-color: rgba(223, 132, 80, 1);  
+    color: rgba(255, 255, 255, 1);
     border-radius: 50%;
     padding: 15px;
     text-align: center;
     cursor: pointer;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
     display: none;
 }
 
 .back-to-top:hover {
-    background-color: #946a32;
-}
+    background-color: rgba(148, 106, 50, 1);  

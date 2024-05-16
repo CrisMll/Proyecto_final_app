@@ -1,5 +1,12 @@
+from dotenv import load_dotenv
+import os
 from supabase import create_client, Client
 from .entities.user import User
+
+load_dotenv()
+url = os.environ.get("SUPABASE_URL")
+key = os.environ.get("SUPABASE_KEY")
+supabase = create_client(url, key)
 
 class ModelUser():
     
@@ -40,4 +47,4 @@ class ModelUser():
         except Exception as ex:
             raise Exception(ex)
 
-    
+

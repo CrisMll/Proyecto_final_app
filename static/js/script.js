@@ -40,19 +40,40 @@ document.getElementById('copyEmail').addEventListener('mouseout', function () {
 });
 
 
-//? Manejo del interruptor del modo oscuro
+//? Manejo del interruptor del modo oscuro permanente en la sesion
 
 function toggleDarkMode() {
-    document.body.classList.toggle('dark');
+    const body = document.body;
+    body.classList.toggle('dark');
+    
+    if (body.classList.contains('dark')) {
+        localStorage.setItem('darkMode', 'enabled');
+    } else {
+        localStorage.setItem('darkMode', 'disabled');
+    }
 }
 
-//? Boton vovler arriba
+//? Cargar el estado del modo oscuro cuando se carga la página
+document.addEventListener('DOMContentLoaded', (event) => {
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === 'enabled') {
+        document.body.classList.add('dark');
+        document.getElementById('dark-mode-toggle').checked = true;
+    } else {
+        document.body.classList.remove('dark');
+        document.getElementById('dark-mode-toggle').checked = false;
+    }
+});
+
+
+
+//? Boton volver arriba
 
 document.addEventListener("DOMContentLoaded", function() {
     const btn = document.getElementById("back-to-top");
 
     window.addEventListener("scroll", function() {
-        if (window.scrollY > 50) { 
+        if (window.scrollY > 10) { 
             btn.style.display = "block";
         } else {
             btn.style.display = "none";
