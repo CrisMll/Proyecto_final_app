@@ -1,0 +1,54 @@
+
+{% extends './base.html' %}
+
+{% block title %}{{ receta['nombre_receta'] }}{% endblock %}
+
+{% block content %}
+
+<section class="container container-recipe gap-2 d-flex justify-content-center align-items-center flex-column p-5">
+    <h1>{{ receta['nombre_receta'] }}</h1>
+
+    {% if current_user.is_authenticated %}
+    {% if receta.nombre_receta in current_user.favorite_recipes %}
+
+
+    <form action="{{ url_for('remove_favorite', recipe_id=receta.id_receta) }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-danger">Eliminar de Favoritos</button>
+    </form>
+    {% else %}
+    <form action="{{ url_for('add_favorite', recipe_id=receta.id_receta) }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button type="submit" class="btn btn-primary">Agregar a Favoritos</button>
+    </form>
+    {% endif %}
+    {% endif %}
+
+    <img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}"
+        class="card-img-top card-img-top-recetas card-img-top-pagina-receta"
+        alt="receta de {{ receta['nombre_receta'] }}">
+
+    <h2>Descripción</h2>
+    <p>{{ receta['descripcion'] }}</p>
+
+
+    <h2>Ingredientes</h2>
+    <ul>
+        {% for ingrediente in ingredientes %}
+        <li>{{ ingrediente['nombre_ingrediente'] }} - {{ ingrediente['cantidad'] }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Preparación</h2>
+    <p>{{ receta['preparacion'] }}</p>
+    <p>
+    </p>
+</section>
+<div class="d-flex justify-content-center align-content-center">
+    <button class="btn btn-primary btn-menu btn-lg p-3 m-3 mb-5" onclick="goBack()">Volver</button>
+</div>
+{% endblock %}
+{% block footer %}
+<a href="#" id="back-to-top" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+</a>
+{% endblock %}

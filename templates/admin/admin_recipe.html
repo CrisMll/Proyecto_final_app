@@ -1,0 +1,23 @@
+{% extends './base.html' %}
+
+
+{% block title %}Admin - Recetas{% endblock %}
+
+
+{% block content %}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+    
+            {% for message in messages %}
+                <div class="alert alert-primary alert-dismissible text-center" role="alert">
+                    <strong>{{ message }}</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    <button type="button"><a href="{{ url_for('admin')}}">Volver al perfil</a></button>
+    
+{% endblock %}

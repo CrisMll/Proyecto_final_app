@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Perfil de Administrador{% endblock %}
+
+{% block customCSS %}
+
+{% endblock %}
+
+{% block content %}
+
+{% with categories = get_flashed_messages(with_categories=true) %}
+    {% if categories %}
+        {% for category, message in categories %}
+            <div class="alert alert-{% if category == 'added' %}success{% elif category == 'removed' %}danger{% endif %}">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<section class="container container-recipe gap-2 d-flex justify-content-center align-items-center flex-column p-5">
+    <h1 class="text-center">Perfil de {{ current_user.name }}</h1>
+    <p><strong>Nombre:</strong> {{ current_user.name }}</p>
+    <p><strong>Correo Electrónico:</strong> {{ current_user.email }}</p>
+    <h2>Recetas de la web</h2>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4">
+        {% for receta in recetas %}
+            <div class="col">
+                <div class="card card-recetas mb-4">
+                    <a class="image-link-recetas" href="{{ url_for('get_recipe', id=receta.id_receta) }}">
+                        <img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}" class="card-img-top" alt="{{ receta['nombre_receta'] }}">
+                        
+                        <div class="card-body image-caption text-center text-lg-center fs-3 p-2 bg-dark bg-opacity-50 m-auto">
+                            <p class="card-text fs-3">{{ receta['nombre_receta'] }}</p>
+                        </div>
+                    </a>    
+                </div>
+                    
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

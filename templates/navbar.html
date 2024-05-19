@@ -1,0 +1,127 @@
+<nav class="navbar text-decoration-none">
+    <div class="container-fluid d-none d-lg-flex justify-content-end align-items-center gap-3">
+        
+        {% if current_user.is_authenticated %}
+            <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+            <label for="dark-mode-toggle" class="fa-solid fa-circle-half-stroke fs-3"></label>
+            <ul class="nav-item dropdown list-unstyled">
+                <li>
+                    <a class="nav-link dropdown-toggle p-0 m-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        {% if current_user.is_authenticated %}
+                            {% if current_user.role == 1 %}
+                                <i class="fa-solid fa-user-tie fs-3 p-0"></i>
+                            {% elif current_user.role == 2 %}
+                                <i class="fa-regular fa-user fs-3 p-0"></i>
+                            {% endif %}
+                        {% else %}
+                            <i class="fa-regular fa-user fs-3 p-0"></i> 
+                        {% endif %}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end list-unstyled" aria-labelledby="userDropdown">
+                        <li><span class="dropdown-item-text">{{ current_user.name }}</span></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        {% if current_user.role == 1 %}
+                            <li><a class="dropdown-item" href="{{ url_for('admin_control') }}">ADMIN - PANEL CONTROL</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('admin') }}">ADMIN - AÑADIR</a></li>
+                            <li><a class="dropdown-item" href="{{ url_for('admin_profile') }}">ADMIN - MENU</a></li>
+                        {% elif current_user.role == 2 %}
+                            <li><a class="dropdown-item" href="{{ url_for('profile') }}">PERFIL</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="{{ url_for('logout') }}">SALIR</a></li>
+                    </ul>
+                </li>
+            </ul>
+        {% else %}
+        <section class="navbar-profile-buttons d-flex justify-content-lg-end gap-3 align-items-center">
+            <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+            <label for="dark-mode-toggle" class="fa-solid fa-circle-half-stroke me-2"></label>
+            <button type="button" class="btn btn-outline-light me-2"><a href="{{ url_for('login') }}">Inicio Sesión
+                </a></button>
+            <button type="button" class="btn btn-outline-light me-2"><a href="{{ url_for('signup') }}">Registro
+                </a></button>
+        </section>
+        {% endif %}
+    </div>
+
+    <!-- Barra de navegación perfil en pantalla pequeña -->
+    <div class="container-fluid container-fluid-small justify-content-end d-lg-none d-flex flex-row align-items-center">
+        <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+        <label for="dark-mode-toggle" class="fa-solid fa-circle-half-stroke fs-3 me-2"></label>
+        <ul class="nav-item dropdown list-unstyled ">
+            <li>
+                <a class="nav-link dropdown-toggle p-0 ms-2" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    {% if current_user.is_authenticated %}
+                        {% if current_user.role == 1 %}
+                            <i class="fa-solid fa-user-tie fs-3"></i>
+                        {% elif current_user.role == 2 %}
+                            <i class="fa-regular fa-user fs-3"></i>
+                        {% endif %}
+                    {% else %}
+                        <i class="fa-regular fa-user fs-3"></i> 
+                    {% endif %}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end list-unstyled" aria-labelledby="userDropdown">
+                    {% if current_user.is_authenticated %}
+                        <li><span class="dropdown-item-text">{{ current_user.name }}</span></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        {% if current_user.role == 1 %}
+                        <li><a class="dropdown-item" href="{{ url_for('admin_control') }}">ADMIN - PANEL CONTROL</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('admin') }}">ADMIN - AÑADIR</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('admin_profile') }}">ADMIN - MENU</a></li>
+                        {% elif current_user.role == 2 %}
+                            <li><a class="dropdown-item" href="{{ url_for('profile') }}">PERFIL</a></li>
+                        {% endif %}
+                        <li><a class="dropdown-item" href="{{ url_for('logout') }}">SALIR</a></li>
+                    {% else %}
+                        <li><a class="dropdown-item" href="{{ url_for('login') }}">Inicio Sesión</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('signup') }}">Registro</a></li>
+                    {% endif %}
+                </ul>
+            </li>
+        </ul>
+        
+    </div>
+
+</nav>
+
+<nav class="navbar navbar-menu-principal navbar-expand-lg p-0 navbar-light text-decoration-none d-flex justify-content-between">
+    <div class="container-fluid justify-content-lg-end justify-content-between gap-3 align-items-center">
+        <a class="navbar-brand" href="/home">Crispy Kitchen</a>
+        <button class="navbar-toggler text-bg-light text-opacity-75" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-between justify-content-lg-end" id="navbarNav">
+            <ul class="navbar-nav text-center">
+                
+                    
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="homepage" href="/home">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown"
+                        aria-expanded="false">Recetas</a>
+                    <ul class="dropdown-menu dropdown-menu-recetas" aria-labelledby="dropdown07">
+                        {% for seccion in secciones %}
+                        <li>
+                            <a class="dropdown-item" href="{{ url_for('get_section', id=seccion.id_seccion) }}">
+                                {{seccion['nombre_seccion'] }}
+                            </a>
+                        {% endfor %}
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/#contact">Contacto</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

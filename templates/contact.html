@@ -1,0 +1,35 @@
+{% extends './base.html' %}
+
+{% block title %}Contacto{% endblock %}
+
+{% block content %}
+
+
+<div class="container-contact">  
+    <section class="d-flex flex-column min-vh-100 bg-black bg-opacity-50 pt-10 pt-md-8 pb-7 pb-md-0">
+        <div class="container my-auto">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-8 col-lg-6 text-center transparent-card">
+                    <div class="text-xs text-white text-opacity-75">
+                        <h1 class="text-white mb-4">Contacto</h1>
+                    </div>
+                    <p class="text-center text-white text-opacity-85 mb-7">
+                        Escríbenos un email con tus sugerencias o visita nuestro perfil de Instagram
+                    </p>
+                    <div class="text-white text-primary-hover mb-7 mb-md-0">
+                        <a class="text-white bi bi-envelope mr-2" href="mailto:crispy.kitchen.app@gmail.com">Gmail</a>
+                        <a href="https://www.instagram.com/crispy-kitchen-app"><i class="fa-brands fa-square-instagram"></i>
+                            Instagram</a>
+                    </div>
+                    <hr>
+                    <div class="input-group mb-3 align-items-center">
+                        <span class="email-text"><a href="mailto:crispy.kitchen.app@gmail.com" id="emailLink">crispy.kitchen.app@gmail.com</a></span>
+                        <button id="copyEmail" class="bi bi-clipboard" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Click para copiar"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

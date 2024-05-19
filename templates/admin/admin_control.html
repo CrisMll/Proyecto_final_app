@@ -1,0 +1,44 @@
+{% extends './base.html' %}
+
+
+{% block title %}Admin - Panel de Control{% endblock %}
+
+
+{% block content %}
+
+<section class="container container-recipe gap-2 d-flex justify-content-center align-items-center flex-column p-5">
+    <h1>Menú de Administrador</h1>
+    <div class="container fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <article class="card card-recetas">
+                    <a class="image-link-recetas image-link-recetas-admin d-flex justify-content-center" href="{{ url_for('admin_profile') }}">
+                        <img src="{{ url_for('static', filename='img/admin_menu.png')}}" 
+                        class="card-img-top card-img-top-recetas-admin" alt="admin menu">
+                        <div class="card-body image-caption text-center text-lg-center fs-3 p-2 bg-dark bg-opacity-70 m-auto">
+                            <h3 class="card-text fs-3">Menú Admin</h3>
+                        </div>
+                    </a>
+                </article>
+            </div>
+            <div class="col-lg-6">
+                <article class="card card-recetas">
+                    <a class="image-link-recetas image-link-recetas-admin d-flex justify-content-center" href="{{ url_for('admin') }}">
+                        <img src="{{ url_for('static', filename='img/admin_recipes.png')}}" 
+                        class="card-img-top card-img-top-recetas-admin" alt="admin menu receta">
+                        <div class="card-body image-caption text-center text-lg-center fs-3 p-2 bg-dark bg-opacity-70 m-auto">
+                            <h3 class="card-text fs-3">Añadir Receta</h3>
+                        </div>
+                    </a>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-primary btn-primary-admin btn-menu btn-lg p-3 m-3 mb-5"><a href="{{ url_for('admin')}}">Volver al perfil</a></button>
+</div>
+</section>
+
+
+    
+{% endblock %}

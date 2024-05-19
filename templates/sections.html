@@ -1,0 +1,35 @@
+{% extends './base.html' %}
+
+{% block title %}{{ seccion['nombre_seccion'] }}{% endblock %}
+
+{% block content %}
+
+<div class="container d-flex flex-column align-items-center">
+    <h1 class="text-center p-3">Recetas {{ seccion['nombre_seccion'] }}</h1>
+    <div class="container-fluid">
+        <div class="row m-2">
+            {% for receta in recetas %}
+            <div class="col-lg-4 col-md-4 col-sm-4 p-2">
+                <article class="card card-recetas">
+                    <a class="image-link-recetas" href="{{ url_for('get_recipe', id=receta.id_receta) }}">
+                        <img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}" 
+                        class="card-img-top card-img-top-recetas" alt="receta de {{ receta['nombre_receta'] }}">
+                        <div class="card-body image-caption text-center text-lg-center fs-3 p-2 bg-dark bg-opacity-50 m-auto">
+                            <h3 class="card-text fs-3">{{ receta['nombre_receta'] }}</h3>
+                        </div>
+                    </a>
+                </article>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <button class="btn btn-primary btn-menu btn-lg p-3 m-3" onclick="goBack()">Volver</button>
+</div>
+
+
+{% endblock %}
+{% block footer %}
+<a href="#" id="back-to-top" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+</a>
+{% endblock %}

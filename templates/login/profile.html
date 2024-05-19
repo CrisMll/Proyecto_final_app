@@ -1,0 +1,35 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Perfil de Usuario{% endblock %}
+
+{% block content %}
+
+{% with categories = get_flashed_messages(with_categories=true) %}
+    {% if categories %}
+        {% for category, message in categories %}
+            <div class="alert alert-{% if category == 'added' %}success{% elif category == 'removed' %}danger{% endif %}">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<div class="container">
+    <h2 class="text-center">Perfil de {{ current_user.name }}</h2>
+    <p><strong>Nombre:</strong> {{ current_user.name }}</p>
+    <p><strong>Correo Electrónico:</strong> {{ current_user.email }}</p>
+    <h3>Recetas Favoritas:</h3>
+    <ul>
+        {% for recipe_name in current_user.favorite_recipes %}
+            <li>{{ recipe_name }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+{% endblock %}
+
+
+
