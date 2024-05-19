@@ -320,9 +320,8 @@ def error_405():
 
 
 if __name__ == '__main__':
-    #?configuracion para poder usar la configuracion para desarrollo creada con el objeto config y su diccionario
     csrf.init_app(app)
-    app.run(debug=True)
+    app.run()
 
 
 
