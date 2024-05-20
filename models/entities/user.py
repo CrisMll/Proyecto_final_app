@@ -70,24 +70,24 @@ class User(UserMixin):
 
     #? FUNCIONES DE RECETAS FAVORITAS
     
-    def add_favorite_recipe(self, recipe_name):
+    def add_favorite_recipe(self, recipe_id):
         response = supabase.table('usuarios').select('favorite_recipes').eq('id', self.id_usuario).execute()
         current_favorites = response.data[0]['favorite_recipes']
         if current_favorites is None:
             current_favorites = []
-        if recipe_name not in current_favorites:
-            current_favorites.append(recipe_name)
+        if recipe_id not in current_favorites:
+            current_favorites.append(recipe_id)
         supabase.table('usuarios').update({'favorite_recipes': current_favorites}).eq('id', self.id_usuario).execute()
-        
+
     def get_favorite_recipes(self):
-        return self.favorite_recipes    
-        
-    def remove_favorite_recipe(self, recipe_name):
+        response = supabase.table('usuarios').select('favorite_recipes').eq('id', self.id_usuario).execute()
+        return response.data[0]['favorite_recipes']  
+    
+    def remove_favorite_recipe(self, recipe_id):
         response = supabase.table('usuarios').select('favorite_recipes').eq('id', self.id_usuario).execute()
         current_favorites = response.data[0]['favorite_recipes']
-        if recipe_name in current_favorites:
-            current_favorites.remove(recipe_name)
+        if recipe_id in current_favorites:
+            current_favorites.remove(recipe_id)
         supabase.table('usuarios').update({'favorite_recipes': current_favorites}).eq('id', self.id_usuario).execute()
-        
 
         
