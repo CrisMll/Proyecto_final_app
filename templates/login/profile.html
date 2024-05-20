@@ -1,10 +1,9 @@
-
 {% extends 'base.html' %}
 
 {% block title %}Perfil de Usuario{% endblock %}
 
 {% block content %}
-
+<body class="w-100">
 {% with categories = get_flashed_messages(with_categories=true) %}
     {% if categories %}
         {% for category, message in categories %}
@@ -16,20 +15,25 @@
     {% endif %}
 {% endwith %}
 
-<div class="container">
+<div class="container container-recipe gap-2 d-flex justify-content-center align-items-center flex-column p-5">
     <h2 class="text-center">Perfil de {{ current_user.name }}</h2>
     <p><strong>Nombre:</strong> {{ current_user.name }}</p>
     <p><strong>Correo Electrónico:</strong> {{ current_user.email }}</p>
     <h3>Recetas Favoritas:</h3>
-    <ul>
-        {% for recipe_name in current_user.favorite_recipes %}
-            <li>{{ recipe_name }}</li>
+    <div class="row m-2">
+        {% for recipe in favorite_recipes %}
+        <div class="col-lg-4 col-md-4 col-sm-4 p-2">
+            <article class="card  p-2 text-center">
+                <a href="{{ url_for('get_recipe', id=recipe.id_receta) }}">
+                    <img src="{{ url_for('static', filename='img/img_recetas/' + recipe.imagen_receta) }}" alt="{{ recipe.nombre_receta }}">
+                    <div class="card-body">
+                        <h5>{{ recipe.nombre_receta }}</h5>
+                    </div>
+                </a>
+            </article>
+        </div>
         {% endfor %}
-    </ul>
+    </div>
 </div>
 
-
 {% endblock %}
-
-
-
