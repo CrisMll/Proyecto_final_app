@@ -12,7 +12,7 @@
 
     /* Dark mode */
     --color-dark-primary: rgba(34, 34, 34, 1);
-    --color-dark-secondary: rgba(45, 45, 45, 1);
+    --color-dark-secondary: rgb(46, 45, 45);
     --color-dark-terciary: rgba(94, 72, 60, .4);
     --color-dark-highlight: rgba(157, 122, 165, .8);
 
@@ -35,10 +35,12 @@
     --subtext-font-size: 14px;
 }
 
-/* GENERALES */
+/* Generales */
 body {
     min-width: 400px;
 }
+
+/* Botones */
 
 .btn {
     padding: 2px 4px;
@@ -54,17 +56,33 @@ body {
 }
 
 .btn-menu {
+    display: inline-block;
+    margin: 15px;
+    padding: 15px 30px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: white;
+    background: var(--color-header-transp);
+    cursor: pointer;
+    transition: ease-out 0.5s;
+    border: 2px solid var(--color-header-transp);
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 0 white;
     min-width: 200px;
 }
 
-/* DARK MODE */
-.dark, .dark .navbar, .dark h2 {
-    transition: all 1s ease;
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    -ms-transition: all 1s ease;
-    -o-transition: all 1s ease;
+.btn-menu:hover {
+    color: #423029;
+    box-shadow: inset 0 -100px 0 0 white;
+    border: 2px solid var(--color-header-transp);
 }
+
+.btn-menu:active {
+    transform: scale(0.9);
+}
+
+/* Dark mode */
 
 .dark {
     background-color: var(--color-dark-primary);
@@ -77,6 +95,14 @@ body {
 
 .dark .navbar {
     background-color: var(--color-dark-secondary);
+}
+
+.dark label{
+    color: var(--color-dark-primary);
+}
+
+.dark .form-container{
+    box-shadow:rgba(255, 255, 255, 0.176) 0px 16px 48px 0px ;
 }
 
 .dark button.btn.btn-outline-light.me-2 a {
@@ -109,7 +135,7 @@ body {
     cursor: pointer;
 }
 
-/* NAVBAR */
+/* Nav-bar */
 .navbar {
     font-family: var(--header-font);
     padding: 8px 2px 0 2px;
@@ -161,7 +187,7 @@ ul {
     margin: auto;
 }
 
-/* GALERIA DE MENUS */
+/* Galery menus */
 .container-menu {
     background: url('../img/rsz_natural-wooden-background.jpg');
     padding: 6rem 0 6rem 0;
@@ -254,7 +280,7 @@ ul {
     -webkit-filter: blur(.5px);
 }
 
-/* MENU DE RECETA */
+/* Menu de recetas */
 .card-recetas {
     background-color: var(--color-dark-highlight);
     border: none;
@@ -274,7 +300,7 @@ ul {
     background: rgba(97, 71, 70, 0.4);
 }
 
-/* PAGINA DE RECETA */
+/* Pagina receta */
 .card-img-top-pagina-receta {
     min-width: min-content;
     width: 400px;
@@ -306,7 +332,7 @@ ul {
     list-style-type: circle;
 }
 
-/* ADMIN */
+/* Admin */
 .card-img-top-recetas-admin {
     width: fit-content;
     padding: 25px;
@@ -320,7 +346,7 @@ ul {
     background-color: var(--color-header-transp);
 }
 
-/* HEADERS */
+/* Headers */
 .cover-container {
     display: flex;
     justify-content: center;
@@ -419,6 +445,11 @@ ul {
 
 .container-contact a {
     font-family: var(--subheader-font);
+    
+}
+
+.form-container{
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 /* Botón de volver arriba */
@@ -438,3 +469,69 @@ ul {
 
 .back-to-top:hover {
     background-color: rgba(148, 106, 50, 1);  
+}
+
+/* Botón de modo oscuro */
+
+.toggle-switch {
+    position: relative;
+    width: 80px;
+    height: 30px;
+    --light: #dfe0d8;
+    --dark: var(--color-header-transp);
+    --link: rgb(27, 129, 112);
+    --link-hover: rgb(24, 94, 82);
+}
+
+.switch-label {
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    background-color: var(--dark);
+    border-radius: 25px;
+    cursor: pointer;
+    border: 3px solid var(--dark);
+}
+
+.checkbox {
+    position: absolute;
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.checkbox:checked~.slider {
+    background-color: var(--light);
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    -webkit-box-shadow: inset 12px -4px 0px 0px var(--light);
+    box-shadow: inset 12px -4px 0px 0px var(--light);
+    border: var(--dark);
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+
+.checkbox:checked~.slider::before {
+    -webkit-transform: translateX(38px);
+    -ms-transform: translateX(38px);
+    transform: translateX(38px);
+    background-color: var(--dark);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    -moz-transform: translateX(38px);
+    -o-transform: translateX(38px);
+}
