@@ -2,7 +2,7 @@
 
 {% block title %}Crispy Kitchen - Inicio{% endblock %}
 
-
+<body class="w-100">
 {% block content %}
 
 <div id="preloader" class="preloader">
@@ -41,16 +41,16 @@
         <div class="row no-gutters">
             {% set column_sizes = ['6', '6', '5', '7', '7', '5'] %}
             {% for seccion in secciones %}
-            <section class="col-lg-{{ column_sizes[loop.index0 % 6] }} col-md-{{ column_sizes[loop.index0 % 6] }} col-sm-{{ column_sizes[loop.index0 % 6] }} p-0">
+            <div class="col-lg-{{ column_sizes[loop.index0 % 6] }} col-md-{{ column_sizes[loop.index0 % 6] }} col-sm-{{ column_sizes[loop.index0 % 6] }} p-0">
                 <article class="card card-menu recetas_seccion m-0">
-                    <div class="card-body image-caption text-start">
+                    <section class="card-body image-caption text-start">
                         <h3 class="card-title">{{ seccion['nombre_seccion'] }}</h3>
-                    </div>
-                    <a href="{{ url_for('get_section', id=seccion.id_seccion) }}" class="image-link" aria-label="Enlace a la sección {{ seccion['nombre_seccion']}}">
+                    </section>
+                    <a href="{{ url_for('get_section', id=seccion.id_seccion) }}" class="image-link">
                         <img class="card-img-top" src="{{ url_for('static', filename='img/img_secciones/' + seccion['imagen_seccion']) + '.jpg' }}">
                     </a>
                 </article>
-            </section>
+            </div>
             {% endfor %}
         </div>
     </div>

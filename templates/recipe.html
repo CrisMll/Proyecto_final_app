@@ -1,15 +1,14 @@
-
 {% extends './base.html' %}
 
 {% block title %}{{ receta['nombre_receta'] }}{% endblock %}
-
+<body class="w-100">
 {% block content %}
 
 <section class="container container-recipe gap-2 d-flex justify-content-center align-items-center flex-column p-5">
     <h1>{{ receta['nombre_receta'] }}</h1>
 
     {% if current_user.is_authenticated %}
-    {% if receta.nombre_receta in current_user.favorite_recipes %}
+    {% if receta.id_receta in current_user.favorite_recipes %}
 
 
     <form action="{{ url_for('remove_favorite', recipe_id=receta.id_receta) }}" method="post">
@@ -25,7 +24,7 @@
     {% endif %}
 
     <img src="{{ url_for('static', filename='img/img_recetas/' + receta['imagen_receta']) }}"
-        class="card-img-top card-img-top-recetas card-img-top-pagina-receta"
+        class="card-img-top card-img-top-recetas card-img-top-pagina-receta img-fluid"
         alt="receta de {{ receta['nombre_receta'] }}">
 
     <h2>Descripción</h2>

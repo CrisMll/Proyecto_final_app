@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/src/static/img/icono.jpg" type="image/x-icon">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="../static/css/preloader.css">
     <!--Bootstrap-->
@@ -18,25 +20,26 @@
         rel="stylesheet">
     <link rel="stylesheet" href="../static/css/reset.css">
     <link rel="stylesheet" href="../static/css/styles.css">
-    <!--? Custom CSS de cada vista si lo hay-->
+    <!-- Custom CSS de cada vista si lo hay-->
     {% block customCSS %}{% endblock %}
 </head>
 
-<body class="w-100">
+
 
 <!--? Contenido específico de cada vista -->
-    <main>
-    {% include 'navbar.html' %}
-    {% block content %}{% endblock %}
 
-    <!--? Controlador para llevar al inicio de la pagina después de hacer scroll -->    
-    <a href="#" id="back-to-top" class="back-to-top">
-        <i class="fas fa-arrow-up"></i>
-    </a>
+{% include 'navbar.html' %}
+{% block content %}{% endblock %}
 
-    </main>
+<a href="#" id="back-to-top" class="back-to-top">
+    <i class="fas fa-arrow-up"></i>
+</a>
+
+
+
+
 <!--? Custom footer de cada vista si lo hay-->
-    {% block footer %}{% endblock %}
+{% block footer %}{% endblock %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -48,5 +51,6 @@
 
 
 </body>
+
 </html>
     

@@ -1,9 +1,13 @@
 <nav class="navbar text-decoration-none">
     <div class="container-fluid d-none d-lg-flex justify-content-end align-items-center gap-3">
-        
+        <div class="toggle-switch">
+            <label class="switch-label">
+                <input type="checkbox" class="checkbox" id="darkModeToggleLg">
+                <span class="slider"></span>
+            </label>
+        </div>
         {% if current_user.is_authenticated %}
-            <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
-            <label for="dark-mode-toggle" class="fa-solid fa-circle-half-stroke fs-3"></label>
+            
             <ul class="nav-item dropdown list-unstyled">
                 <li>
                     <a class="nav-link dropdown-toggle p-0 m-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
@@ -36,8 +40,8 @@
             </ul>
         {% else %}
         <section class="navbar-profile-buttons d-flex justify-content-lg-end gap-3 align-items-center">
-            <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
-            <label for="dark-mode-toggle" class="fa-solid fa-circle-half-stroke me-2"></label>
+            
+            <!--<button id="darkModeToggle"><i class="fa-solid fa-circle-half-stroke fs-3"></i></button>-->
             <button type="button" class="btn btn-outline-light me-2"><a href="{{ url_for('login') }}">Inicio Sesión
                 </a></button>
             <button type="button" class="btn btn-outline-light me-2"><a href="{{ url_for('signup') }}">Registro
@@ -48,8 +52,12 @@
 
     <!-- Barra de navegación perfil en pantalla pequeña -->
     <div class="container-fluid container-fluid-small justify-content-end d-lg-none d-flex flex-row align-items-center">
-        <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
-        <label for="dark-mode-toggle" class="fa-solid fa-circle-half-stroke fs-3 me-2"></label>
+        <div class="toggle-switch">
+                <label class="switch-label">
+                    <input type="checkbox" class="checkbox" id="darkModeToggleSm">
+                    <span class="slider"></span>
+                </label>
+            </div>
         <ul class="nav-item dropdown list-unstyled ">
             <li>
                 <a class="nav-link dropdown-toggle p-0 ms-2" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown"
