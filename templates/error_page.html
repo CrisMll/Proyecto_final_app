@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Error{% endblock %}
+{% block customCSS %}
+    <link rel="stylesheet" href="../static/css/error.css">
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+        
+                {% for message in messages %}
+                    <div class="alert alert-primary alert-dismissible" role="alert">
+                        <strong>{{ message }}</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h1>Error</h1>
+        <p>¡Ups! algo ha ido mal.</p>
+        <p>Por favor, <a href="{{ url_for('admin') }}">inténtalo de nuevo</a></p>
+
+{% endblock %}

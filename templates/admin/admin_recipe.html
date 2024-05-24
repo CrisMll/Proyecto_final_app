@@ -5,19 +5,19 @@
 
 
 {% block content %}
-
+<div class="d-flex flex-column justify-content-center align-items-center">
     {% with messages = get_flashed_messages() %}
         {% if messages %}
     
             {% for message in messages %}
-                <div class="alert alert-primary alert-dismissible text-center" role="alert">
+                <div class="alert alert-primary alert-dismissible" role="alert">
                     <strong>{{ message }}</strong>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
                 </div>
             {% endfor %}
         {% endif %}
     {% endwith %}
-    
-    <button type="button"><a href="{{ url_for('admin')}}">Volver al perfil</a></button>
-    
+    <div class="d-flex flex-column justify-content-center align-items-center">
+    <button class="btn btn-primary btn-menu btn-lg p-3 m-3" type="button"><a href="{{ url_for('admin_control')}}">Volver al perfil</a></button>
+</div>
 {% endblock %}

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/src/static/img/icono.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/icono.jpg') }}" type="image/x-icon">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="../static/css/preloader.css">
     <!--Bootstrap-->

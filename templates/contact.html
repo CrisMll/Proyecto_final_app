@@ -1,35 +1,38 @@
 {% extends './base.html' %}
 
 {% block title %}Contacto{% endblock %}
+
 <body class="w-100">
-{% block content %}
 
+    {% block content %}
 
-<div class="container-contact">  
-    <section class="d-flex flex-column min-vh-100 bg-black bg-opacity-50 pt-10 pt-md-8 pb-7 pb-md-0">
-        <div class="container my-auto">
-            <div class="row justify-content-center">
-                <div class="col-12 col-md-8 col-lg-6 text-center transparent-card">
-                    <div class="text-xs text-white text-opacity-75">
-                        <h1 class="text-white mb-4">Contacto</h1>
+    <main class="d-flex flex-column justify-content-center align-items-center">
+        <div class="formulario_contacto container container-recipe gap-4 d-flex justify-content-center align-items-center flex-column p-5 mb-3">
+            <h3>Escríbenos un email con tus sugerencias</h3>
+            <p>Ya sea para nuevas ideas de recetas o para hacernos saber cómo
+                podemos mejorar.</p>
+            <section class="formulario_contacto_section">
+                <form action="https://formspree.io/f/xvoenbzy" method="POST" class="formulario_contacto mt-4">
+                    <div class="formulario_contacto_input">
+                        <input autocomplete="off" type="text" name="name" required>
+                        <label for="name">Nombre</label>
                     </div>
-                    <p class="text-center text-white text-opacity-85 mb-7">
-                        Escríbenos un email con tus sugerencias o visita nuestro perfil de Instagram
-                    </p>
-                    <div class="text-white text-primary-hover mb-7 mb-md-0">
-                        <a class="text-white bi bi-envelope mr-2" href="mailto:crispy.kitchen.app@gmail.com">Gmail</a>
-                        <a href="https://www.instagram.com/crispy-kitchen-app"><i class="fa-brands fa-square-instagram"></i>
-                            Instagram</a>
+    
+                    <div class="formulario_contacto_input">
+                        <input autocomplete="off" name="email" type="text" required>
+                        <label for="email">E-mail</label>
                     </div>
-                    <hr>
-                    <div class="input-group mb-3 align-items-center">
-                        <span class="email-text"><a href="mailto:crispy.kitchen.app@gmail.com" id="emailLink">crispy.kitchen.app@gmail.com</a></span>
-                        <button id="copyEmail" class="bi bi-clipboard" type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Click para copiar"></button>
+    
+                    <div class="formulario_contacto_input">
+                        <textarea cols="30" rows="3" id="message" name="message" required></textarea>
+                        <label for="message">Tu mensaje</label>
                     </div>
-                </div>
-            </div>
+                    <button class="mt-2">Enviar →</button>
+                </form>
+            </section>
         </div>
-    </section>
-</div>
-
+    
+    
+        <button class="btn btn-primary btn-menu btn-lg p-3 m-3"><a href="/home">Volver</a></button>
+    </main>
 {% endblock %}
