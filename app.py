@@ -33,8 +33,12 @@ url = os.environ.get("SUPABASE_URL")
 key = os.environ.get("SUPABASE_KEY")
 supabase = create_client(url, key)
 app.secret_key = os.getenv('SECRET_KEY')
-app.config['UPLOAD_FOLDER'] = 'static/img/img_recetas/'
+app.config['UPLOAD_FOLDER'] = os.path.join(os.path.dirname(__file__), 'static', 'img', 'img_recetas')
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+
+# Crear el directorio de subida si no existe
+if not os.path.exists(app.config['UPLOAD_FOLDER']):
+    os.makedirs(app.config['UPLOAD_FOLDER'])
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
@@ -54,7 +58,7 @@ def home_in():
 @app.route("/sections/<id>")
 def get_section(id):
     secciones = get_secciones()
-    seccion = next((s for s in secciones if s["id_seccion"] == id), None)
+    seccion = next((s for s in secciones if ["id_seccion"] == id), None)
     response = supabase.table("recetas").select("id_receta, nombre_receta, imagen_receta").eq("tipo_seccion_id", id).execute()
     recetas = response.data
     return render_template("sections.html", seccion=seccion, recetas=recetas, secciones=secciones)
@@ -107,7 +111,10 @@ def login():
         user = User.get_by_email(email)
         if user and check_password_hash(user.passwrd, passwrd):
             login_user(user)
-            return redirect(url_for('home'))
+            if current_user.role == 1:
+                return redirect(url_for('admin_control'))
+            elif current_user.role == 2:
+                return redirect(url_for('profile'))
         else:
             flash('Datos incorrectos. Por favor, inténtalo de nuevo.', 'error')
             show_signup_link = True  
@@ -218,6 +225,7 @@ def admin():
 # Admin backend para manejar los datos enviados al agregar receta
 @app.route('/admin/new', methods=['POST'])
 def admin_recipe():    
+    secciones = get_secciones()
     if current_user.role == 1:
         if request.method == 'POST':
             nombre_receta = request.form['nombre_receta']
@@ -230,9 +238,10 @@ def admin_recipe():
             imagen_receta.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                 
             try:
+                # Control de errores para insertar receta en la tabla 'recetas'
                 response_receta = supabase.table('recetas').insert({
                     'nombre_receta': nombre_receta,
-                    'imagen_receta': filename,
+                    'imagen_receta': filename, #solo el nombre
                     'descripcion': descripcion,
                     'tipo_seccion_id': tipo_seccion_id,
                     'preparacion': preparacion,
@@ -242,52 +251,80 @@ def admin_recipe():
                 id_receta = response.data[0]
 
                 try:
+                    # Insertamos ingredientes en la tabla 'ingredientes_recetas'
                     for ingrediente in ingredientes:
                         ingrediente = int(ingrediente)
                         response = supabase.table('ingredientes_recetas').insert({
                             'id_tipo_receta': id_receta['id_receta'],
                             'id_tipo_ingrediente': ingrediente
                         }).execute()
-                        response = supabase.table('ingredientes_recetas_prueba').insert({
-                            'id_tipo_receta': id_receta['id_receta'],
-                            'id_tipo_ingrediente': ingrediente
-                        }).execute()
-                    
-                    return redirect(url_for('home_in'))
+                        response = supabase.table('ingredientes_recetas').select('*').execute()    
+                        receta = response.data
+                        print(receta)
 
                 except Exception as e:
-                    return f"An error occurred while saving the ingredients: {e}"
-            except Exception as e:
-                return f"An error occurred while saving the recipe: {e}"
+                    print(f"Error al añadir ingredientes: {e}")
+                    flash(f'Error al añadir ingredientes: {e}', 'error')
+                    return redirect(url_for('error'))
 
-    return redirect(url_for('home_in'))
+                flash('¡Receta añadida con éxito!', 'success')
+                return render_template('admin/admin_recipe.html', secciones=secciones)
+
+            #? Si falla el insert    
+            except Exception as e:
+                print(f"Error al añadir la receta: {e}")
+                flash(f'Error al añadir la receta: {e}', 'error')
+                return redirect(url_for('error'))
+
+    return render_template('admin/admin_recipe.html',secciones=secciones)
 
 
 # Vista del perfil de admin
 @app.route('/admin/profile')
 def admin_profile():
+    secciones = get_secciones()
     response = supabase.table("recetas").select("id_receta, nombre_receta, imagen_receta, ingredientes, preparacion").execute()
     recetas = response.data
-    return render_template("admin/admin_profile.html", recetas=recetas)
+    return render_template("admin/admin_profile.html", recetas=recetas,secciones=secciones)
 
 # Vista control de admin principal
 @app.route('/admin/control')
 def admin_control():
+    secciones = get_secciones()
     response = supabase.table("recetas").select("id_receta, nombre_receta, imagen_receta, ingredientes, preparacion").execute()
     recetas = response.data
-    return render_template("admin/admin_control.html", recetas=recetas)
+    return render_template("admin/admin_control.html", recetas=recetas, secciones=secciones)
 
 
 
 # CONTACTO
-@app.route('/contact', methods=['GET', 'POST'])
+'''@app.route('/contact', methods=['GET', 'POST'])
 def contact_page():
-    return render_template('contact.html')
+    return render_template('contact.html')'''
+
+
+@app.route('/contact_form', methods=['GET', 'POST'])
+def form_page():
+    secciones = get_secciones()
+    return render_template("contact.html", secciones=secciones)
+
 
 # MANEJO DE VISTAS DE ERRORES
-@app.route('/error_405')
-def error_405():
-    return render_template('error_405.html')
+
+@app.errorhandler(404)
+def not_found_error(error):
+    flash('Ahora mismo no encontramos lo que buscas', 'danger')
+    return render_template('error404_500.html'), 404
+
+# Función para manejar el error 500
+@app.errorhandler(500)
+def internal_error(error):
+    flash('Parece que el servidor no responde correctamente en estos momentos', 'danger')
+    return render_template('error404_500.html'), 500
+
+@app.route('/error_page')
+def error():
+    return render_template('error_page.html')
 
 
 
